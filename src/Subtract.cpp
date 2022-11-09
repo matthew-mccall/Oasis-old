@@ -5,7 +5,7 @@
 #include "Oasis/Subtract.hpp"
 #include "Oasis/Real.hpp"
 
-namespace os {
+namespace oa {
     EvaluateReturnType Subtract::evaluate() const {
         auto [leftResult, rightResult, error, cause] = evaluateOperands();
 
@@ -26,4 +26,4 @@ namespace os {
     }
 
     Subtract::Subtract(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right) : BinaryExpressionNode(std::move(left), std::move(right)) { }
-}// namespace os
+}// namespace oa

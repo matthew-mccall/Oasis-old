@@ -7,7 +7,7 @@
 
 #include "Utility/BinaryExpressionNode.hpp"
 
-namespace os {
+namespace oa {
 
     class Subtract final : public BinaryExpressionNode {
     public:
@@ -19,6 +19,6 @@ namespace os {
         OA_DECLARE_FACTORY(Subtract)
     };
 
-}// namespace os
+}// namespace oa
 
 #endif//OASIS_SUBTRACT_HPP

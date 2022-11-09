@@ -4,3 +4,6 @@
 [submodule "lib/spdlog"]
 	path = lib/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "lib/wxWidgets"]
+	path = lib/wxWidgets
+	url = https://github.com/wxWidgets/wxWidgets.git

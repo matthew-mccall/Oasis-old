@@ -11,6 +11,7 @@ include(AddOasisTest)
 
 add_subdirectory(lib/GSL)
 add_subdirectory(lib/spdlog)
+add_subdirectory(lib/wxWidgets)
 
 add_library(Oasis include/Oasis/Expression.hpp src/Real.cpp include/Oasis/Real.hpp src/BinaryExpressionNode.cpp include/Oasis/Utility/BinaryExpressionNode.hpp include/Oasis/Utility/Types.hpp src/Blank.cpp include/Oasis/Blank.hpp src/Add.cpp include/Oasis/Add.hpp)
 add_library(Oasis::Oasis ALIAS Oasis)

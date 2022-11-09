@@ -1,6 +1,16 @@
-#include <iostream>
+#include "SimpleView.hpp"
 
-int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
-}
+class OasisDesktop : public wxApp {
+public:
+    bool OnInit() override {
+        SimpleView *simpleView = new SimpleView();
+        simpleView->Show(true);
+        return true;
+    }
+
+    int OnExit() override {
+        return wxAppBase::OnExit();
+    }
+};
+
+wxIMPLEMENT_APP(OasisDesktop);

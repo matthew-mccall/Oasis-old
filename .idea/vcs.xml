@@ -4,5 +4,14 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/GSL" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/spdlog" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/wxWidgets" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/wxWidgets/3rdparty/catch" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/wxWidgets/3rdparty/nanosvg" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/wxWidgets/3rdparty/pcre" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/wxWidgets/src/expat" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/wxWidgets/src/jpeg" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/wxWidgets/src/png" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/wxWidgets/src/tiff" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/wxWidgets/src/zlib" vcs="Git" />
   </component>
 </project>

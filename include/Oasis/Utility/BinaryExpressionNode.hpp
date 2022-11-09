@@ -32,7 +32,6 @@ namespace oa {
 
         [[nodiscard]] BinaryEvaluateReturnType evaluateOperands() const;
 
-    private:
         std::unique_ptr<Expression> _left, _right;
     };
 

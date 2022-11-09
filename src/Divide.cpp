@@ -26,4 +26,7 @@ namespace oa {
     }
 
     Divide::Divide(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right) : BinaryExpressionNode(std::move(left), std::move(right)) { }
+    std::unique_ptr<oa::Expression> Divide::copy() {
+        return Divide::Factory {_left->copy(), _right->copy()};
+    }
 }// namespace oa

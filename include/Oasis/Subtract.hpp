@@ -12,7 +12,7 @@ namespace oa {
     class Subtract final : public BinaryExpressionNode {
     public:
         Subtract(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right);
-
+        std::unique_ptr<oa::Expression> copy() override;
         [[nodiscard]] EvaluateReturnType evaluate() const override;
 
         OA_EXPRESSION_TYPE(SUBTRACT)

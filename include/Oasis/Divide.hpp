@@ -13,7 +13,7 @@ namespace oa {
     class Divide final : public BinaryExpressionNode {
     public:
         Divide(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right);
-
+        std::unique_ptr<oa::Expression> copy() override;
         [[nodiscard]] EvaluateReturnType evaluate() const override;
 
         OA_EXPRESSION_TYPE(DIVIDE)

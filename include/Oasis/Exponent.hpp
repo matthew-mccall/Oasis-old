@@ -13,7 +13,7 @@ namespace oa {
     class Exponent final : public BinaryExpressionNode {
     public:
         Exponent(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right);
-
+        std::unique_ptr<oa::Expression> copy() override;
         [[nodiscard]] EvaluateReturnType evaluate() const override;
 
         OA_EXPRESSION_TYPE(EXPONENT)

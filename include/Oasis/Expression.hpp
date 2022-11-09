@@ -33,6 +33,7 @@ namespace oa {
         enum class Type {
             REAL,
             BLANK,
+            VARIABLE,
             ADD,
             SUBTRACT,
             MULTIPLY,
@@ -41,6 +42,8 @@ namespace oa {
         };
 
         virtual bool addChild(std::unique_ptr<Expression> &&expr) = 0;
+
+        virtual std::unique_ptr<oa::Expression> copy() = 0;
 
         [[nodiscard]] virtual EvaluateReturnType evaluate() const = 0;
         [[nodiscard]] virtual Type getType() const = 0;

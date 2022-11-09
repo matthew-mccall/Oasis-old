@@ -36,7 +36,8 @@ namespace oa {
             ADD,
             SUBTRACT,
             MULTIPLY,
-            DIVIDE
+            DIVIDE,
+            EXPONENT
         };
 
         virtual bool addChild(std::unique_ptr<Expression> &&expr) = 0;

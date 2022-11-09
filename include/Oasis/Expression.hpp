@@ -53,9 +53,23 @@ namespace oa {
     static Expression::Type getStaticType() { return Expression::Type::type; } \
     virtual Expression::Type getType() const override { return getStaticType(); }
 
-#define OA_DECLARE_FACTORY(type)                                  \
-    template<typename... Ts>                                      \
-    static std::unique_ptr<type> Factory(Ts &&...args) {          \
-        return std::make_unique<type>(std::forward<Ts>(args)...); \
-    }
+#define OA_DECLARE_FACTORY(type)                                                            \
+                                                                                            \
+    class Factory {                                                                         \
+    public:                                                                                 \
+        template<typename... Ts>                                                            \
+        Factory(Ts &&...args) : _ptr(std::make_unique<type>(std::forward<Ts>(args)...)) { } \
+                                                                                            \
+        operator std::unique_ptr<Expression>() {                                            \
+            return std::move(_ptr);                                                         \
+        }                                                                                   \
+                                                                                            \
+        operator std::unique_ptr<type>() {                                                  \
+            return std::move(_ptr);                                                         \
+        }                                                                                   \
+                                                                                            \
+    private:                                                                                \
+        std::unique_ptr<type> _ptr;                                                         \
+    };
+
 #endif//OASIS_EXPRESSION_HPP

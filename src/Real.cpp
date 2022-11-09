@@ -11,7 +11,7 @@ namespace oa {
     }
 
     EvaluateReturnType Real::evaluate() const {
-        return EvaluateReturnType{ Real::Factory(getVal()) };
+        return EvaluateReturnType { Real::Factory { getVal() } };
     }
 
     bool Real::addChild(std::unique_ptr<Expression> &&expr) {

@@ -8,7 +8,12 @@
 #include "Oasis/Real.hpp"
 
 void testAdd(double a, double b) {
-    auto add = oa::Add::Factory(oa::Real::Factory(a), oa::Real::Factory(b));
+
+    std::unique_ptr<oa::Add> add = oa::Add::Factory {
+        oa::Real::Factory { a },
+        oa::Real::Factory { b }
+    };
+
     auto [result, error, cause] = add->evaluate();
 
     assert(!error);

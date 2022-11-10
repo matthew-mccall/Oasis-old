@@ -2,6 +2,8 @@
 // Created by Andrew Nazareth on 11/9/22.
 //
 
+#include <cassert>
+
 #include "spdlog/spdlog.h"
 
 #include "Oasis/Add.hpp"

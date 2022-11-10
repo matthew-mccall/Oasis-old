@@ -2,6 +2,8 @@
 // Created by Matthew McCall on 11/9/22.
 //
 
+#include <cmath>
+
 #include "KeypadButton.hpp"
 
 BEGIN_EVENT_TABLE(KeypadButton, wxPanel)
@@ -43,6 +45,8 @@ void KeypadButton::render(wxDC &dc) {
 
     wxSize dcSize = dc.GetSize();
     dc.DrawRoundedRectangle(0, 0, std::max(MIN_BUTTON_WIDTH, dcSize.GetWidth()), std::max(MIN_BUTTON_HEIGHT, dcSize.GetHeight()), 4);
+
+    dc.SetFont(wxFont(static_cast<int>(2 * (std::log((dcSize.GetHeight() * 0.75) + 1)) + 9), wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
 
     wxSize textSize = dc.GetTextExtent(text);
     dc.DrawText(text, (dcSize.GetWidth() - textSize.GetWidth()) / 2, (dcSize.GetHeight() - textSize.GetHeight()) / 2);

@@ -21,7 +21,7 @@ int main(int argc, char** argv){
         oa::Variable::Factory { "c" }
     };
 
-    auto [result, error, cause] = add->evaluate()
+    auto [result, error, cause] = add->evaluate();
     assert(!error);
 
 

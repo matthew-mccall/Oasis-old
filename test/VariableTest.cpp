@@ -1,5 +1,5 @@
 //
-// Created by Matthew McCall on 11/8/22.
+// Created by Andrew Nazareth on 11/9/22.
 //
 
 #include <cassert>
@@ -8,8 +8,9 @@
 
 #include "Oasis/Add.hpp"
 #include "Oasis/Real.hpp"
+#include "Oasis/Variable.hpp"
 
-void testAdd(double a, double b) {
+void testVariable(double a, double b) {
 
     std::unique_ptr<oa::Add> add = oa::Add::Factory {
         oa::Real::Factory { a },
@@ -29,11 +30,11 @@ void testAdd(double a, double b) {
 
 int main(int argc, char **argv) {
 
-    testAdd(2, 3);
-    testAdd(-1, 1);
-    testAdd(9, -8);
+    testVariable(2, 3);
+    testVariable(-1, 1);
+    testVariable(9, -8);
 
-    testAdd(3.14, 2.29);
-    testAdd(-69, 42);
-    testAdd(6.28, -2);
+    testVariable(3.14, 2.29);
+    testVariable(-69, 42);
+    testVariable(6.28, -2);
 }

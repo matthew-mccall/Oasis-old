@@ -21,4 +21,7 @@ namespace oa {
     double Real::getVal() const {
         return _val;
     }
+    std::unique_ptr<oa::Expression> Real::copy() {
+        return Real::Factory{getVal()};
+    }
 }// namespace oa

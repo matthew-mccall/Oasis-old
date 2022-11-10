@@ -13,5 +13,8 @@ namespace oa {
     EvaluateReturnType Blank::evaluate() const {
         return { nullptr, BLANK, this };
     }
+    std::unique_ptr<oa::Expression> Blank::copy() {
+        return Blank::Factory{};
+    }
 
 }// namespace oa

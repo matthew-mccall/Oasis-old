@@ -12,7 +12,7 @@ include(AddOasisTest)
 add_subdirectory(lib/GSL)
 add_subdirectory(lib/spdlog)
 
-add_library(Oasis include/Oasis/Expression.hpp src/Real.cpp include/Oasis/Real.hpp src/BinaryExpressionNode.cpp include/Oasis/Utility/BinaryExpressionNode.hpp include/Oasis/Utility/Types.hpp src/Blank.cpp include/Oasis/Blank.hpp src/Add.cpp include/Oasis/Add.hpp)
+add_library(Oasis include/Oasis/Expression.hpp src/Real.cpp include/Oasis/Real.hpp src/BinaryExpressionNode.cpp include/Oasis/Utility/BinaryExpressionNode.hpp include/Oasis/Utility/Types.hpp src/Blank.cpp include/Oasis/Blank.hpp src/Add.cpp include/Oasis/Add.hpp include/Oasis/Subtract.hpp src/Subtract.cpp src/Multiply.cpp include/Oasis/Multiply.hpp src/Divide.cpp include/Oasis/Divide.hpp src/Exponent.cpp include/Oasis/Exponent.hpp src/Variable.cpp include/Oasis/Variable.hpp src/Substitute.cpp include/Oasis/Substitute.hpp)
 add_library(Oasis::Oasis ALIAS Oasis)
 
 target_include_directories(Oasis PUBLIC include)
@@ -21,3 +21,9 @@ target_link_libraries(Oasis PUBLIC Microsoft.GSL::GSL)
 add_subdirectory(desktop)
 
 AddOasisTest(AddTest)
+AddOasisTest(SubtractTest)
+AddOasisTest(MultiplyTest)
+AddOasisTest(DivideTest)
+AddOasisTest(ExponentTest)
+AddOasisTest(VariableTest)
+AddOasisTest(CopyTest)

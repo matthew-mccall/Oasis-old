@@ -9,11 +9,11 @@
 
 namespace oa {
 
-    class Real : public Expression {
+    class Real final: public Expression {
     public:
         explicit Real(double val);
         Real(const Real &other);
-
+        std::unique_ptr<oa::Expression> copy() override;
         bool addChild(std::unique_ptr<Expression> &&expr) override;
 
         [[nodiscard]] EvaluateReturnType evaluate() const override;

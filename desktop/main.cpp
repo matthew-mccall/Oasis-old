@@ -1,4 +1,4 @@
-#include "SimpleView.hpp"
+#include "views/SimpleView.hpp"
 
 class OasisDesktop : public wxApp {
 public:

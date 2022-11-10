@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/GSL" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/doxygen-awesome-css" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/spdlog" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/wxWidgets" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/wxWidgets/3rdparty/catch" vcs="Git" />

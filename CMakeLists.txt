@@ -19,7 +19,7 @@ add_library(Oasis::Oasis ALIAS Oasis)
 target_include_directories(Oasis PUBLIC include)
 target_link_libraries(Oasis PUBLIC Microsoft.GSL::GSL)
 
-add_subdirectory(desktop)
+add_subdirectory(desktop EXCLUDE_FROM_ALL)
 
 AddOasisTest(AddTest)
 AddOasisTest(SubtractTest)

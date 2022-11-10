@@ -41,11 +41,29 @@ namespace oa {
             EXPONENT
         };
 
+        /**
+         * Adds a child to this Expression. Expression dependent
+         * @param expr The expression to add
+         * @return true if the expression was added
+         */
         virtual bool addChild(std::unique_ptr<Expression> &&expr) = 0;
 
+        /**
+         * Copies an Expression
+         * @return A copy of this expression
+         */
         virtual std::unique_ptr<oa::Expression> copy() = 0;
 
+        /**
+         * Evaluates this expression and child expressions
+         * @return The evaluated expression
+         */
         [[nodiscard]] virtual EvaluateReturnType evaluate() const = 0;
+
+        /**
+         * Gets the type of this Expression
+         * @return
+         */
         [[nodiscard]] virtual Type getType() const = 0;
 
         virtual ~Expression() = default;

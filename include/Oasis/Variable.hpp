@@ -10,7 +10,10 @@
 
 namespace oa {
 
-    class Variable final: public Expression {
+    /**
+     * An arbitrary variable
+     */
+    class Variable final : public Expression {
     public:
         explicit Variable(std::string rep);
         Variable(Variable &other);

@@ -11,6 +11,9 @@
 
 namespace oa {
 
+    /**
+     * Helper class for Expressions that have two children/operands
+     */
     class BinaryExpressionNode : public Expression {
     public:
         BinaryExpressionNode();

@@ -9,7 +9,10 @@
 
 namespace oa {
 
-    class Real final: public Expression {
+    /**
+     * Represents a Real number
+     */
+    class Real final : public Expression {
     public:
         explicit Real(double val);
         Real(const Real &other);

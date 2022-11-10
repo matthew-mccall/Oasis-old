@@ -20,14 +20,14 @@ namespace oa {
             leftReal = dynamic_cast<Real *>(leftResult.get());
             rightReal = dynamic_cast<Real *>(rightResult.get());
 
-            return EvaluateReturnType { Real::Factory { pow(leftReal->getVal(), rightReal->getVal() )} };
+            return EvaluateReturnType { Real::Factory { pow(leftReal->getVal(), rightReal->getVal()) } };
         }
 
         return EvaluateReturnType { Exponent::Factory { std::move(leftResult), std::move(rightResult) } };
     }
 
-    Exponent::Exponent(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right) : BinaryExpressionNode(std::move(left), std::move(right)) { }
+    Exponent::Exponent(std::unique_ptr<Expression> &&base, std::unique_ptr<Expression> &&power) : BinaryExpressionNode(std::move(base), std::move(power)) { }
     std::unique_ptr<oa::Expression> Exponent::copy() {
-        return Exponent::Factory {_left->copy(), _right->copy()};
+        return Exponent::Factory { _left->copy(), _right->copy() };
     }
 }// namespace oa

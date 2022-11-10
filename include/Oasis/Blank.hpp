@@ -9,7 +9,12 @@
 
 namespace oa {
 
-    class Blank final: public Expression {
+    /**
+     * A Blank expression is a placeholder.
+     *
+     * It is not meant to be evaluated, but replaced with an actual expression before evaluation
+     */
+    class Blank final : public Expression {
     public:
         bool addChild(std::unique_ptr<Expression> &&expr) override;
         [[nodiscard]] EvaluateReturnType evaluate() const override;

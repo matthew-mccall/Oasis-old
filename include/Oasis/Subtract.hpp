@@ -9,6 +9,9 @@
 
 namespace oa {
 
+    /**
+     * The Add class subtracts two expressions
+     */
     class Subtract final : public BinaryExpressionNode {
     public:
         Subtract(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right);

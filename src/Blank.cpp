@@ -14,15 +14,18 @@ namespace oa {
         return { nullptr, BLANK, this };
     }
 
-    std::unique_ptr<oa::Expression> Blank::copy() {
+    std::unique_ptr<oa::Expression> Blank::copy() const {
         return Blank::Factory {};
     }
 
-    void Blank::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) {
+    void Blank::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const {
     }
 
-    void Blank::recurseForEachChild(std::function<void(const Expression &)> func) {
+    void Blank::recurseForEachChild(std::function<void(const Expression &)> func) const {
         func(*this);
+    }
+    bool Blank::operator==(const std::unique_ptr<Expression> &other) const {
+        return other->getType() == Expression::Type::BLANK;
     }
 
 }// namespace oa

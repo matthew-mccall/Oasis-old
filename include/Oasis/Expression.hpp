@@ -52,7 +52,7 @@ namespace oa {
          * Copies an Expression
          * @return A copy of this expression
          */
-        virtual std::unique_ptr<oa::Expression> copy() = 0;
+        virtual std::unique_ptr<oa::Expression> copy() const = 0;
 
         /**
          * Evaluates this expression and child expressions
@@ -64,13 +64,15 @@ namespace oa {
          * Calls func for each child
          * @param func The function to run on each child
          */
-        virtual void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) = 0;
+        virtual void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const = 0;
 
         /**
          * Recursively calls for each child and their children
          * @param func The function to call on all Nodes down the tree
          */
-        virtual void recurseForEachChild(std::function<void(const Expression &)> func) = 0;
+        virtual void recurseForEachChild(std::function<void(const Expression &)> func) const = 0;
+
+        virtual bool operator==(const std::unique_ptr<Expression> &other) const = 0;
 
         /**
          * Gets the type of this Expression

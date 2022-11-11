@@ -26,7 +26,7 @@ namespace oa {
     }
 
     Add::Add(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right) : BinaryExpressionNode(std::move(left), std::move(right)) { }
-    std::unique_ptr<oa::Expression> Add::copy() {
+    std::unique_ptr<oa::Expression> Add::copy() const {
         return Add::Factory();
     }
     Add::Add() : BinaryExpressionNode() { }

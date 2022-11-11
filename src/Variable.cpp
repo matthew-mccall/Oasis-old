@@ -20,14 +20,25 @@ namespace oa {
         return _rep;
     }
 
-    std::unique_ptr<oa::Expression> Variable::copy() {
+    std::unique_ptr<oa::Expression> Variable::copy() const {
         return Variable::Factory { getRep() };
     }
 
-    void Variable::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) {
+    void Variable::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const {
     }
 
-    void Variable::recurseForEachChild(std::function<void(const Expression &)> func) {
+    void Variable::recurseForEachChild(std::function<void(const Expression &)> func) const {
         func(*this);
+    }
+
+    bool Variable::operator==(const std::unique_ptr<Expression> &other) const {
+
+        if (other->getType() != Expression::Type::VARIABLE) {
+            return false;
+        }
+
+        auto *variableOther = dynamic_cast<Variable *>(other.get());
+
+        return variableOther->getRep() == getRep();
     }
 }// namespace oa

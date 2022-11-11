@@ -21,14 +21,24 @@ namespace oa {
     double Real::getVal() const {
         return _val;
     }
-    std::unique_ptr<oa::Expression> Real::copy() {
+    std::unique_ptr<oa::Expression> Real::copy() const {
         return Real::Factory { getVal() };
     }
 
-    void Real::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) {
+    void Real::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const {
     }
 
-    void Real::recurseForEachChild(std::function<void(const Expression &)> func) {
+    void Real::recurseForEachChild(std::function<void(const Expression &)> func) const {
         func(*this);
+    }
+    bool Real::operator==(const std::unique_ptr<Expression> &other) const {
+
+        if (other->getType() != Expression::Type::REAL) {
+            return false;
+        }
+
+        auto *realOther = dynamic_cast<Real *>(other.get());
+
+        return realOther->getVal() == getVal();
     }
 }// namespace oa

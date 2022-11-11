@@ -27,7 +27,7 @@ namespace oa {
          * Copies this expression and its children
          * @return A new Multiply expression whose children are copies of this expression
          */
-        std::unique_ptr<oa::Expression> copy() override;
+        std::unique_ptr<oa::Expression> copy() const override;
 
         /**
          * Evaluates the operands and multiplies them if they are Real operands

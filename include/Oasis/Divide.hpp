@@ -28,7 +28,7 @@ namespace oa {
          * Copies this expression and its children
          * @return A new Divide expression whose children are copies of this expression
          */
-        std::unique_ptr<oa::Expression> copy() override;
+        std::unique_ptr<oa::Expression> copy() const override;
 
         /**
          * Simplifies the operands and divides them if they are Real operands

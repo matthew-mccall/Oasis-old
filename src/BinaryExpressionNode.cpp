@@ -41,16 +41,35 @@ namespace oa {
     BinaryExpressionNode::BinaryExpressionNode() : _left(Blank::Factory()), _right(Blank::Factory()) { }
     BinaryExpressionNode::BinaryExpressionNode(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right) : _left(std::move(left)), _right(std::move(right)) { }
 
-    void BinaryExpressionNode::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) {
+    void BinaryExpressionNode::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const {
         func(_left);
         func(_right);
     }
 
-    void BinaryExpressionNode::recurseForEachChild(std::function<void(const Expression &)> func) {
+    void BinaryExpressionNode::recurseForEachChild(std::function<void(const Expression &)> func) const {
         _left->recurseForEachChild(func);
         _right->recurseForEachChild(func);
 
         func(*this);
+    }
+
+    bool BinaryExpressionNode::operator==(const std::unique_ptr<Expression> &other) const {
+
+        if (other->getType() != this->getType()) {
+            return false;
+        }
+
+        auto *binaryOther = dynamic_cast<BinaryExpressionNode *>(other.get());
+
+        if (binaryOther->_left != _left) {
+            return false;
+        }
+
+        if (binaryOther->_right != _right) {
+            return false;
+        }
+
+        return true;
     }
 
     BinaryExpressionNode::BinaryEvaluateReturnType::BinaryEvaluateReturnType(std::unique_ptr<Expression> &&leftResult, std::unique_ptr<Expression> &&rightResult) : leftResult(std::move(leftResult)), rightResult(std::move(rightResult)) { }

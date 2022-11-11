@@ -26,7 +26,7 @@ namespace oa {
     }
 
     Multiply::Multiply(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right) : BinaryExpressionNode(std::move(left), std::move(right)) { }
-    std::unique_ptr<oa::Expression> Multiply::copy() {
+    std::unique_ptr<oa::Expression> Multiply::copy() const {
         return Multiply::Factory();
     }
     Multiply::Multiply() : BinaryExpressionNode() { }

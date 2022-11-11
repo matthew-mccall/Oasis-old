@@ -17,16 +17,18 @@ namespace oa {
     public:
         explicit Variable(std::string rep);
         Variable(Variable &other);
-        std::unique_ptr<oa::Expression> copy() override;
+        std::unique_ptr<oa::Expression> copy() const override;
         bool addChild(std::unique_ptr<Expression> &&expr) override;
 
         [[nodiscard]] EvaluateReturnType evaluate() const override;
 
-        void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) override;
-        void recurseForEachChild(std::function<void(const Expression &)> func) override;
+        void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const override;
+        void recurseForEachChild(std::function<void(const Expression &)> func) const override;
 
         //[[nodiscard]] double getVal() const;
         [[nodiscard]] std::string getRep() const;
+
+        bool operator==(const std::unique_ptr<Expression> &other) const override;
 
         OA_EXPRESSION_TYPE(VARIABLE)
         OA_DECLARE_FACTORY(Variable)

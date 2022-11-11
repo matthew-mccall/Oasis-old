@@ -27,7 +27,7 @@ namespace oa {
     }
 
     Exponent::Exponent(std::unique_ptr<Expression> &&base, std::unique_ptr<Expression> &&power) : BinaryExpressionNode(std::move(base), std::move(power)) { }
-    std::unique_ptr<oa::Expression> Exponent::copy() {
+    std::unique_ptr<oa::Expression> Exponent::copy() const {
         return Exponent::Factory();
     }
     Exponent::Exponent() : BinaryExpressionNode() { }

@@ -20,8 +20,10 @@ namespace oa {
         BinaryExpressionNode(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right);
 
         bool addChild(std::unique_ptr<Expression> &&expr) final;
-        void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) final;
-        void recurseForEachChild(std::function<void(const Expression &)> func) override;
+        void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const final;
+        void recurseForEachChild(std::function<void(const Expression &)> func) const override;
+
+        bool operator==(const std::unique_ptr<Expression> &other) const final;
 
     protected:
         struct BinaryEvaluateReturnType {

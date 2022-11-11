@@ -17,7 +17,7 @@ namespace oa {
         Subtract();
 
         Subtract(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right);
-        std::unique_ptr<oa::Expression> copy() override;
+        std::unique_ptr<oa::Expression> copy() const override;
         [[nodiscard]] EvaluateReturnType evaluate() const override;
 
         OA_EXPRESSION_TYPE(SUBTRACT)

@@ -26,7 +26,7 @@ namespace oa {
     }
 
     Subtract::Subtract(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right) : BinaryExpressionNode(std::move(left), std::move(right)) { }
-    std::unique_ptr<oa::Expression> Subtract::copy() {
+    std::unique_ptr<oa::Expression> Subtract::copy() const {
         return Subtract::Factory();
     }
     Subtract::Subtract() : BinaryExpressionNode() { }

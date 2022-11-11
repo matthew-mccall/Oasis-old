@@ -37,11 +37,11 @@ void KeypadButton::render(wxDC &dc) {
     dc.SetPen(wxPen(wxColour(0, 0, 0, 64)));
 
     if (pressedDown)
-        dc.SetBrush(*wxGREY_BRUSH);
+        dc.SetBrush(wxBrush(wxColour(127, 127, 127, 64)));
     else if (hovered)
-        dc.SetBrush(*wxLIGHT_GREY_BRUSH);
+        dc.SetBrush(wxBrush(wxColour(255, 255, 255, 128)));
     else
-        dc.SetBrush(wxBrush(wxColour(250, 250, 250, 64)));
+        dc.SetBrush(wxBrush(wxColour(225, 225, 225, 64)));
 
     wxSize dcSize = dc.GetSize();
     dc.DrawRoundedRectangle(0, 0, std::max(MIN_BUTTON_WIDTH, dcSize.GetWidth()), std::max(MIN_BUTTON_HEIGHT, dcSize.GetHeight()), 4);

@@ -23,7 +23,7 @@ namespace oa {
         void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const override;
         void recurseForEachChild(std::function<void(const Expression &)> func) const override;
 
-        bool operator==(const std::unique_ptr<Expression> &other) const override;
+        bool operator==(const Expression &other) const override;
 
         OA_EXPRESSION_TYPE(BLANK)
         OA_DECLARE_FACTORY(Blank)

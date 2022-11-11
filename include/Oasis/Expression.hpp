@@ -72,7 +72,11 @@ namespace oa {
          */
         virtual void recurseForEachChild(std::function<void(const Expression &)> func) const = 0;
 
-        virtual bool operator==(const std::unique_ptr<Expression> &other) const = 0;
+        virtual bool operator==(const Expression &other) const = 0;
+
+        bool operator!=(const Expression &other) const {
+            return !(*this == other);
+        }
 
         /**
          * Gets the type of this Expression

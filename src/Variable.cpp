@@ -31,14 +31,15 @@ namespace oa {
         func(*this);
     }
 
-    bool Variable::operator==(const std::unique_ptr<Expression> &other) const {
+    bool Variable::operator==(const Expression &other) const {
 
-        if (other->getType() != Expression::Type::VARIABLE) {
+        auto [result, error, cause] = other.evaluate();
+
+        if (result->getType() != Expression::Type::VARIABLE) {
             return false;
         }
 
-        auto *variableOther = dynamic_cast<Variable *>(other.get());
-
-        return variableOther->getRep() == getRep();
+        const auto &variableOther = dynamic_cast<const Variable &>(*result);
+        return variableOther.getRep() == getRep();
     }
 }// namespace oa

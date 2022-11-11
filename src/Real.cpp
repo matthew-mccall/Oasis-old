@@ -31,14 +31,15 @@ namespace oa {
     void Real::recurseForEachChild(std::function<void(const Expression &)> func) const {
         func(*this);
     }
-    bool Real::operator==(const std::unique_ptr<Expression> &other) const {
+    bool Real::operator==(const Expression &other) const {
 
-        if (other->getType() != Expression::Type::REAL) {
+        auto [result, error, cause] = other.evaluate();
+
+        if (result->getType() != Expression::Type::REAL) {
             return false;
         }
 
-        auto *realOther = dynamic_cast<Real *>(other.get());
-
-        return realOther->getVal() == getVal();
+        const auto &realOther = dynamic_cast<const Real &>(*result);
+        return realOther.getVal() == getVal();
     }
 }// namespace oa

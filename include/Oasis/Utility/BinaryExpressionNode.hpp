@@ -23,7 +23,7 @@ namespace oa {
         void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const final;
         void recurseForEachChild(std::function<void(const Expression &)> func) const override;
 
-        bool operator==(const std::unique_ptr<Expression> &other) const final;
+        bool operator==(const Expression &other) const final;
 
     protected:
         struct BinaryEvaluateReturnType {

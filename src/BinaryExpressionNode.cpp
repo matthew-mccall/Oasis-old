@@ -53,19 +53,47 @@ namespace oa {
         func(*this);
     }
 
-    bool BinaryExpressionNode::operator==(const std::unique_ptr<Expression> &other) const {
+    bool BinaryExpressionNode::operator==(const Expression &other) const {
 
-        if (other->getType() != this->getType()) {
+        auto [result, error, cause] = evaluate();
+
+        assert(!error);
+
+        if (other == *result) {
+            return true;
+        }
+
+        auto [otherResult, otherError, otherCause] = evaluate();
+
+        assert(!otherError);
+
+        if (*otherResult == *result) {
+            return true;
+        }
+
+        if (other.getType() != this->getType()) {
             return false;
         }
 
-        auto *binaryOther = dynamic_cast<BinaryExpressionNode *>(other.get());
+        const auto &binaryOther = dynamic_cast<const BinaryExpressionNode &>(other);
 
-        if (binaryOther->_left != _left) {
+        auto [leftResult, rightResult, error1, cause1] = evaluateOperands();
+
+        assert(!error1);
+
+        auto [otherLeftResult, otherLeftError, otherLeftCause] = binaryOther._left->evaluate();
+
+        assert(!otherLeftError);
+
+        if (*otherLeftResult != *leftResult) {
             return false;
         }
 
-        if (binaryOther->_right != _right) {
+        auto [otherRightResult, otherRightError, otherRightCause] = binaryOther._right->evaluate();
+
+        assert(!otherRightError);
+
+        if (*otherRightResult != *rightResult) {
             return false;
         }
 

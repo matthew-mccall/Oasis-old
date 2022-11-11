@@ -28,7 +28,7 @@ namespace oa {
         //[[nodiscard]] double getVal() const;
         [[nodiscard]] std::string getRep() const;
 
-        bool operator==(const std::unique_ptr<Expression> &other) const override;
+        bool operator==(const Expression &other) const override;
 
         OA_EXPRESSION_TYPE(VARIABLE)
         OA_DECLARE_FACTORY(Variable)

@@ -24,8 +24,8 @@ namespace oa {
     void Blank::recurseForEachChild(std::function<void(const Expression &)> func) const {
         func(*this);
     }
-    bool Blank::operator==(const std::unique_ptr<Expression> &other) const {
-        return other->getType() == Expression::Type::BLANK;
+    bool Blank::operator==(const Expression &other) const {
+        return other.getType() == Expression::Type::BLANK;
     }
 
 }// namespace oa

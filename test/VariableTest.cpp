@@ -7,34 +7,80 @@
 #include "spdlog/spdlog.h"
 
 #include "Oasis/Add.hpp"
+#include "Oasis/Oasis.hpp"
 #include "Oasis/Real.hpp"
+#include "Oasis/Substitute.hpp"
 #include "Oasis/Variable.hpp"
 
-void testVariable(double a, double b) {
+void testVariableAdd(double a, double b, std::string var, double val) {
 
-    std::unique_ptr<oa::Add> add = oa::Add::Factory {
-        oa::Real::Factory { a },
-        oa::Real::Factory { b }
+    auto expr = oa::Add::Factory {
+        oa::Multiply::Factory { oa::Real::Factory { a }, oa::Variable::Factory { var } },
+        oa::Multiply::Factory { oa::Variable::Factory { var }, oa::Real::Factory { b } }
     };
 
-    auto [result, error, cause] = add->evaluate();
+    auto substituted = oa::substitute(expr, var, oa::Real::Factory { val });
 
+    assert(substituted);
+
+    auto [result, error, cause] = substituted->evaluate();
     assert(!error);
     assert(result->getType() == oa::Expression::Type::REAL);
 
     auto *realResult = dynamic_cast<oa::Real *>(result.get());
-    assert(realResult->getVal() == (a + b));
+    //assert(realResult->getVal() == (a + b));
 
-    spdlog::info("{} + {} = {}", a, b, realResult->getVal());
+    spdlog::info("{}{} + {}{} = {}, for {}={}", a, var, b, var, realResult->getVal(), var, val);
+}
+
+void testVariableAdd(double a, double b, std::string var) {
+
+    std::unique_ptr<oa::Expression> expr = oa::Add::Factory {
+        oa::Multiply::Factory { oa::Real::Factory { a }, oa::Variable::Factory { var } },
+        oa::Multiply::Factory { oa::Variable::Factory { var }, oa::Real::Factory { b } }
+    };
+
+    auto [result, error, cause] = expr->evaluate();
+
+    std::unique_ptr<oa::Multiply> expr2 = oa::Multiply::Factory { oa::Real::Factory { a + b }, oa::Variable::Factory { var } };
+
+    //    assert(result == expr2);
+
+    // auto [result2, error2, cause2] = expr2->evaluate();
+
+    assert(result->getType() == oa::Expression::Type::MULTIPLY);
+    oa::Multiply *mul;
+    oa::Real *real;
+    mul = dynamic_cast<oa::Multiply *>(result.get());
+    real = dynamic_cast<oa::Real *>(mul->getLeft().get());
+
+    assert(real->getVal() == a + b);
+    // assert()
+
+    /*auto substituted = oa::substitute(expr, var, oa::Real::Factory { 1 });
+
+    assert(substituted);
+
+    //auto [result, error, cause] = substituted->evaluate();
+    assert(!error);
+    //assert(result->getType() == oa::Expression::Type::REAL);
+
+    auto *realResult = dynamic_cast<oa::Real *>(result.get());
+    //assert(realResult->getVal() == (a + b));
+
+    //spdlog::info("{}{} + {}{} = {}{}", a, var, b, var, realResult->getVal(), var);*/
 }
 
 int main(int argc, char **argv) {
 
-    testVariable(2, 3);
-    testVariable(-1, 1);
-    testVariable(9, -8);
+    testVariableAdd(2, 3, "x", 2);
+    testVariableAdd(-1, 1, "y", 5);
+    testVariableAdd(9, -8, "z", 3);
 
-    testVariable(3.14, 2.29);
-    testVariable(-69, 42);
-    testVariable(6.28, -2);
+    testVariableAdd(3.14, 2.29, "x_1", 4);
+    testVariableAdd(-69, 42, "x_2", 9);
+    testVariableAdd(6.28, -2, "x_3", 0);
+
+    testVariableAdd(2.3, 7.7, "x");
+    testVariableAdd(3.1, -2.514, "z");
 }

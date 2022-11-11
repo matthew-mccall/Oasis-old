@@ -25,11 +25,15 @@ namespace oa {
 
         bool operator==(const Expression &other) const final;
 
+        const std::unique_ptr<Expression> &getLeft() const;
+        const std::unique_ptr<Expression> &getRight() const;
+
     protected:
         struct BinaryEvaluateReturnType {
 
             BinaryEvaluateReturnType(std::unique_ptr<Expression> &&leftResult, std::unique_ptr<Expression> &&rightResult);
             BinaryEvaluateReturnType(std::unique_ptr<Expression> &&leftResult, std::unique_ptr<Expression> &&rightResult, EvaluateResultCode error, const Expression *cause);
+
 
             std::unique_ptr<Expression> leftResult;
             std::unique_ptr<Expression> rightResult;

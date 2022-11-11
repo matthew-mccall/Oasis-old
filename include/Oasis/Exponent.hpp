@@ -5,6 +5,8 @@
 #ifndef OASIS_EXPONENT_HPP
 #define OASIS_EXPONENT_HPP
 
+#include <functional>
+
 #include "Utility/BinaryExpressionNode.hpp"
 
 namespace oa {
@@ -14,6 +16,8 @@ namespace oa {
      */
     class Exponent final : public BinaryExpressionNode {
     public:
+        Exponent();
+
         /**
          * Creates a new Exponent expression from two operands
          * @param base The expression to be exponentiated

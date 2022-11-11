@@ -22,6 +22,13 @@ namespace oa {
         return _val;
     }
     std::unique_ptr<oa::Expression> Real::copy() {
-        return Real::Factory{getVal()};
+        return Real::Factory { getVal() };
+    }
+
+    void Real::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) {
+    }
+
+    void Real::recurseForEachChild(std::function<void(const Expression &)> func) {
+        func(*this);
     }
 }// namespace oa

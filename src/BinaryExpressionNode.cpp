@@ -9,12 +9,12 @@ namespace oa {
 
     bool BinaryExpressionNode::addChild(std::unique_ptr<Expression> &&expr) {
 
-        if (_left->getType() == Expression::Type::BLANK) {
+        if (_left->getType() == Expression::Type::BLANK || !_left) {
             _left = std::move(expr);
             return true;
         }
 
-        if (_right->getType() == Expression::Type::BLANK) {
+        if (_right->getType() == Expression::Type::BLANK || !_right) {
             _right = std::move(expr);
             return true;
         }
@@ -40,6 +40,18 @@ namespace oa {
 
     BinaryExpressionNode::BinaryExpressionNode() : _left(Blank::Factory()), _right(Blank::Factory()) { }
     BinaryExpressionNode::BinaryExpressionNode(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right) : _left(std::move(left)), _right(std::move(right)) { }
+
+    void BinaryExpressionNode::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) {
+        func(_left);
+        func(_right);
+    }
+
+    void BinaryExpressionNode::recurseForEachChild(std::function<void(const Expression &)> func) {
+        _left->recurseForEachChild(func);
+        _right->recurseForEachChild(func);
+
+        func(*this);
+    }
 
     BinaryExpressionNode::BinaryEvaluateReturnType::BinaryEvaluateReturnType(std::unique_ptr<Expression> &&leftResult, std::unique_ptr<Expression> &&rightResult) : leftResult(std::move(leftResult)), rightResult(std::move(rightResult)) { }
     BinaryExpressionNode::BinaryEvaluateReturnType::BinaryEvaluateReturnType(std::unique_ptr<Expression> &&leftResult, std::unique_ptr<Expression> &&rightResult, EvaluateResultCode error, const Expression *cause) : leftResult(std::move(leftResult)), rightResult(std::move(rightResult)), error(error), cause(cause) { }

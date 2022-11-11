@@ -15,6 +15,8 @@ namespace oa {
      */
     class Divide final : public BinaryExpressionNode {
     public:
+        Divide();
+
         /**
          * Creates a new Divide expression from two operands
          * @param left The left operand

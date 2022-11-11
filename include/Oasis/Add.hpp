@@ -14,6 +14,7 @@ namespace oa {
      */
     class Add final : public BinaryExpressionNode {
     public:
+        Add();
         /**
          * Creates a new Add expression from two operands
          * @param left The left operand

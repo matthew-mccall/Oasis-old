@@ -13,8 +13,16 @@ namespace oa {
     EvaluateReturnType Blank::evaluate() const {
         return { nullptr, BLANK, this };
     }
+
     std::unique_ptr<oa::Expression> Blank::copy() {
-        return Blank::Factory{};
+        return Blank::Factory {};
+    }
+
+    void Blank::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) {
+    }
+
+    void Blank::recurseForEachChild(std::function<void(const Expression &)> func) {
+        func(*this);
     }
 
 }// namespace oa

@@ -21,6 +21,9 @@ namespace oa {
 
         [[nodiscard]] EvaluateReturnType evaluate() const override;
 
+        void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) override;
+        void recurseForEachChild(std::function<void(const Expression &)> func) override;
+
         [[nodiscard]] double getVal() const;
 
         OA_EXPRESSION_TYPE(REAL)

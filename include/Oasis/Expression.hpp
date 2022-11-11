@@ -61,6 +61,18 @@ namespace oa {
         [[nodiscard]] virtual EvaluateReturnType evaluate() const = 0;
 
         /**
+         * Calls func for each child
+         * @param func The function to run on each child
+         */
+        virtual void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) = 0;
+
+        /**
+         * Recursively calls for each child and their children
+         * @param func The function to call on all Nodes down the tree
+         */
+        virtual void recurseForEachChild(std::function<void(const Expression &)> func) = 0;
+
+        /**
          * Gets the type of this Expression
          * @return
          */

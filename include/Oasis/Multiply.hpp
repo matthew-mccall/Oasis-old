@@ -14,6 +14,8 @@ namespace oa {
      */
     class Multiply final : public BinaryExpressionNode {
     public:
+        Multiply();
+
         /**
          * Creates a new Multiply expression from two operands
          * @param left The left operand

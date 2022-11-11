@@ -61,17 +61,24 @@ namespace oa {
 
         auto *binaryOther = dynamic_cast<BinaryExpressionNode *>(other.get());
 
-        if (binaryOther->_left != _left) {
+        if (!(binaryOther->_left == _left)) {
             return false;
         }
 
-        if (binaryOther->_right != _right) {
+        if (!(binaryOther->_right == _right)) {
             return false;
         }
 
         return true;
     }
+    const std::unique_ptr<Expression> &BinaryExpressionNode::getLeft() const {
+        return _left;
+    }
+    const std::unique_ptr<Expression> &BinaryExpressionNode::getRight() const {
+        return _right;
+    }
 
     BinaryExpressionNode::BinaryEvaluateReturnType::BinaryEvaluateReturnType(std::unique_ptr<Expression> &&leftResult, std::unique_ptr<Expression> &&rightResult) : leftResult(std::move(leftResult)), rightResult(std::move(rightResult)) { }
     BinaryExpressionNode::BinaryEvaluateReturnType::BinaryEvaluateReturnType(std::unique_ptr<Expression> &&leftResult, std::unique_ptr<Expression> &&rightResult, EvaluateResultCode error, const Expression *cause) : leftResult(std::move(leftResult)), rightResult(std::move(rightResult)), error(error), cause(cause) { }
+
 }// namespace oa

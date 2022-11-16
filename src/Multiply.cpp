@@ -15,24 +15,18 @@ namespace oa {
         }
 
         if (leftResult->getType() == Expression::Type::REAL && rightResult->getType() == Expression::Type::REAL) {
-            Real *leftReal, *rightReal;
+            auto &leftReal = dynamic_cast<Real &>(*leftResult);
+            auto &rightReal = dynamic_cast<Real &>(*rightResult);
 
-            leftReal = dynamic_cast<Real *>(leftResult.get());
-            rightReal = dynamic_cast<Real *>(rightResult.get());
+            return EvaluateReturnType { RealFactory { leftReal.getVal() * rightReal.getVal() } };
+        }
 
-            return EvaluateReturnType { RealFactory { leftReal->getVal() * rightReal->getVal() } };
-        } else if (leftResult->getType() == Expression::Type::REAL && rightResult->getType() == Expression::Type::VARIABLE) {
-            Real *left;
-            Variable *right;
-            left = dynamic_cast<Real *>(leftResult.get());
-            right = dynamic_cast<Variable *>(rightResult.get());
-            return EvaluateReturnType { MultiplyFactory { RealFactory { left->getVal() }, VariableFactory { right->getRep() } } };
-        } else if (leftResult->getType() == Expression::Type::VARIABLE && rightResult->getType() == Expression::Type::REAL) {
-            Real *left;
-            Variable *right;
-            left = dynamic_cast<Real *>(rightResult.get());    //real val
-            right = dynamic_cast<Variable *>(leftResult.get());//var val
-            return EvaluateReturnType { MultiplyFactory { RealFactory { left->getVal() }, VariableFactory { right->getRep() } } };
+        if (leftResult == rightResult) {
+            return EvaluateReturnType { ExponentFactory { leftResult->copy(), RealFactory { 2 } } };
+        }
+
+        if (rightResult->getType() == Expression::Type::REAL) {// Move coefficients to the left for standard formatting
+            return EvaluateReturnType { MultiplyFactory { std::move(rightResult), std::move(leftResult) } };
         }
 
         return EvaluateReturnType { MultiplyFactory { std::move(leftResult), std::move(rightResult) } };

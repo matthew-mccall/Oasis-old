@@ -5,6 +5,8 @@
 #ifndef OASIS_BINARYEXPRESSIONNODE_HPP
 #define OASIS_BINARYEXPRESSIONNODE_HPP
 
+#include <cassert>
+
 #include "Oasis/Expression.hpp"
 
 #include "Oasis/Blank.hpp"

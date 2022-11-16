@@ -7,3 +7,6 @@
 [submodule "lib/doxygen-awesome-css"]
 	path = lib/doxygen-awesome-css
 	url = https://github.com/jothepro/doxygen-awesome-css.git
+[submodule "lib/wxWidgets"]
+	path = lib/wxWidgets
+	url = https://github.com/wxWidgets/wxWidgets.git

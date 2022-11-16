@@ -9,6 +9,8 @@
 
 namespace oa {
 
+    OA_DECLARE_FACTORY(BlankFactory, Blank)
+
     /**
      * A Blank expression is a placeholder.
      *
@@ -19,6 +21,7 @@ namespace oa {
         bool addChild(std::unique_ptr<Expression> &&expr) override;
         [[nodiscard]] EvaluateReturnType evaluate() const override;
         [[nodiscard]] std::unique_ptr<oa::Expression> copy() const override;
+        [[nodiscard]] std::unique_ptr<oa::Expression> copyWithoutChildren() const override;
 
         void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const override;
         void recurseForEachChild(std::function<void(const Expression &)> func) const override;
@@ -26,7 +29,7 @@ namespace oa {
         bool operator==(const Expression &other) const override;
 
         OA_EXPRESSION_TYPE(BLANK)
-        OA_DECLARE_FACTORY(Blank)
+        OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_VALUE)
     };
 
 }// namespace oa

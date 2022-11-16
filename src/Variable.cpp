@@ -9,7 +9,7 @@ namespace oa {
     Variable::Variable(oa::Variable &other) : _rep(other._rep) { }
 
     EvaluateReturnType Variable::evaluate() const {
-        return EvaluateReturnType { Variable::Factory { getRep() } };
+        return EvaluateReturnType { VariableFactory { getRep() } };
     }
 
     bool Variable::addChild(std::unique_ptr<Expression> &&expr) {
@@ -21,7 +21,7 @@ namespace oa {
     }
 
     std::unique_ptr<oa::Expression> Variable::copy() const {
-        return Variable::Factory { getRep() };
+        return VariableFactory { getRep() };
     }
 
     void Variable::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const {
@@ -41,5 +41,9 @@ namespace oa {
 
         const auto &variableOther = dynamic_cast<const Variable &>(*result);
         return variableOther.getRep() == getRep();
+    }
+
+    std::unique_ptr<oa::Expression> Variable::copyWithoutChildren() const {
+        return VariableFactory { getRep() };
     }
 }// namespace oa

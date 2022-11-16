@@ -10,6 +10,8 @@
 
 namespace oa {
 
+    OA_DECLARE_FACTORY(VariableFactory, Variable)
+
     /**
      * An arbitrary variable
      */
@@ -17,7 +19,10 @@ namespace oa {
     public:
         explicit Variable(std::string rep);
         Variable(Variable &other);
-        std::unique_ptr<oa::Expression> copy() const override;
+
+        [[nodiscard]] std::unique_ptr<oa::Expression> copy() const override;
+        std::unique_ptr<oa::Expression> copyWithoutChildren() const override;
+
         bool addChild(std::unique_ptr<Expression> &&expr) override;
 
         [[nodiscard]] EvaluateReturnType evaluate() const override;
@@ -31,7 +36,7 @@ namespace oa {
         bool operator==(const Expression &other) const override;
 
         OA_EXPRESSION_TYPE(VARIABLE)
-        OA_DECLARE_FACTORY(Variable)
+        OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_VALUE)
 
     private:
         //double _val;

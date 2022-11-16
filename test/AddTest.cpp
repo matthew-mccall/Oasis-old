@@ -11,9 +11,9 @@
 
 void testAdd(double a, double b) {
 
-    std::unique_ptr<oa::Add> add = oa::Add::Factory {
-        oa::Real::Factory { a },
-        oa::Real::Factory { b }
+    std::unique_ptr<oa::Add> add = oa::AddFactory {
+        oa::RealFactory { a },
+        oa::RealFactory { b }
     };
 
     auto [result, error, cause] = add->evaluate();

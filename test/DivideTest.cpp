@@ -11,9 +11,9 @@
 
 void testDivide(double a, double b) {
 
-    std::unique_ptr<oa::Divide> divide = oa::Divide::Factory {
-        oa::Real::Factory { a },
-        oa::Real::Factory { b }
+    std::unique_ptr<oa::Divide> divide = oa::DivideFactory {
+        oa::RealFactory { a },
+        oa::RealFactory { b }
     };
 
     auto [result, error, cause] = divide->evaluate();

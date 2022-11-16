@@ -9,6 +9,8 @@
 
 namespace oa {
 
+    OA_DECLARE_FACTORY(RealFactory, Real)
+
     /**
      * Represents a Real number
      */
@@ -16,7 +18,10 @@ namespace oa {
     public:
         explicit Real(double val);
         Real(const Real &other);
-        std::unique_ptr<oa::Expression> copy() const override;
+
+        [[nodiscard]] std::unique_ptr<oa::Expression> copy() const override;
+        [[nodiscard]] std::unique_ptr<oa::Expression> copyWithoutChildren() const override;
+
         bool addChild(std::unique_ptr<Expression> &&expr) override;
 
         [[nodiscard]] EvaluateReturnType evaluate() const override;
@@ -29,7 +34,7 @@ namespace oa {
         bool operator==(const Expression &other) const override;
 
         OA_EXPRESSION_TYPE(REAL)
-        OA_DECLARE_FACTORY(Real)
+        OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_VALUE)
 
     private:
         double _val;

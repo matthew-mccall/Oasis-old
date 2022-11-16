@@ -10,10 +10,12 @@
 
 namespace oa {
 
+    OA_DECLARE_FACTORY(DivideFactory, Divide)
+
     /**
      * The Divide class adds divides expressions
      */
-    class Divide final : public BinaryExpressionNode {
+    class Divide final : public BinaryExpressionNode<DivideFactory> {
     public:
         Divide();
 
@@ -25,19 +27,13 @@ namespace oa {
         Divide(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right);
 
         /**
-         * Copies this expression and its children
-         * @return A new Divide expression whose children are copies of this expression
-         */
-        std::unique_ptr<oa::Expression> copy() const override;
-
-        /**
          * Simplifies the operands and divides them if they are Real operands
          * @return The result, error, and/or cause of error if there is an error
          */
         [[nodiscard]] EvaluateReturnType evaluate() const override;
 
         OA_EXPRESSION_TYPE(DIVIDE)
-        OA_DECLARE_FACTORY(Divide)
+        OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_ARITHMETIC | EXPRESSION_CATEGORY_BINARY_OPERANDS)
     };
 
 }// namespace oa

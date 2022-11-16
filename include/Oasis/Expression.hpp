@@ -41,6 +41,13 @@ namespace oa {
             EXPONENT
         };
 
+        enum Category : std::uint16_t {
+            EXPRESSION_CATEGORY_ARITHMETIC = 1,
+            EXPRESSION_CATEGORY_BINARY_OPERANDS = 1 << 1,
+            EXPRESSION_CATEGORY_UNARY_OPERANDS = 1 << 2,
+            EXPRESSION_CATEGORY_VALUE = 1 << 3,
+        };
+
         /**
          * Adds a child to this Expression. Expression dependent
          * @param expr The expression to add
@@ -52,7 +59,9 @@ namespace oa {
          * Copies an Expression
          * @return A copy of this expression
          */
-        virtual std::unique_ptr<oa::Expression> copy() const = 0;
+        [[nodiscard]] virtual std::unique_ptr<oa::Expression> copy() const = 0;
+
+        virtual std::unique_ptr<oa::Expression> copyWithoutChildren() const = 0;
 
         /**
          * Evaluates this expression and child expressions
@@ -83,6 +92,7 @@ namespace oa {
          * @return
          */
         [[nodiscard]] virtual Type getType() const = 0;
+        virtual std::uint16_t getCategories() const = 0;
 
         virtual ~Expression() = default;
     };
@@ -93,23 +103,32 @@ namespace oa {
     static Expression::Type getStaticType() { return Expression::Type::type; } \
     virtual Expression::Type getType() const override { return getStaticType(); }
 
-#define OA_DECLARE_FACTORY(type)                                                            \
-                                                                                            \
-    class Factory {                                                                         \
-    public:                                                                                 \
-        template<typename... Ts>                                                            \
-        Factory(Ts &&...args) : _ptr(std::make_unique<type>(std::forward<Ts>(args)...)) { } \
-                                                                                            \
-        operator std::unique_ptr<Expression>() {                                            \
-            return std::move(_ptr);                                                         \
-        }                                                                                   \
-                                                                                            \
-        operator std::unique_ptr<type>() {                                                  \
-            return std::move(_ptr);                                                         \
-        }                                                                                   \
-                                                                                            \
-    private:                                                                                \
-        std::unique_ptr<type> _ptr;                                                         \
+#define OA_EXPRESSION_CATEGORIES(categories)                          \
+    static std::uint16_t getStaticCategories() { return categories; } \
+    virtual std::uint16_t getCategories() const override { return getStaticCategories(); }
+
+#define OA_DECLARE_FACTORY(factoryName, type)                                                            \
+                                                                                                         \
+    class type;                                                                                          \
+                                                                                                         \
+    class factoryName {                                                                                  \
+    public:                                                                                              \
+        template<typename... Ts>                                                                         \
+        explicit factoryName(Ts &&...args) : _ptr(std::make_unique<type>(std::forward<Ts>(args)...)) { } \
+                                                                                                         \
+        operator std::unique_ptr<Expression>() {                                                         \
+                                                                                                         \
+            std::unique_ptr<Expression> ptr;                                                             \
+            ptr.reset((Expression *) _ptr.release());                                                    \
+            return ptr;                                                                                  \
+        }                                                                                                \
+                                                                                                         \
+        operator std::unique_ptr<type>() {                                                               \
+            return std::move(_ptr);                                                                      \
+        }                                                                                                \
+                                                                                                         \
+    private:                                                                                             \
+        std::unique_ptr<type> _ptr;                                                                      \
     };
 
 #endif//OASIS_EXPRESSION_HPP

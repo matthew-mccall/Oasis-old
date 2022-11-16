@@ -11,7 +11,7 @@ namespace oa {
     }
 
     EvaluateReturnType Real::evaluate() const {
-        return EvaluateReturnType { Real::Factory { getVal() } };
+        return EvaluateReturnType { RealFactory { getVal() } };
     }
 
     bool Real::addChild(std::unique_ptr<Expression> &&expr) {
@@ -22,7 +22,7 @@ namespace oa {
         return _val;
     }
     std::unique_ptr<oa::Expression> Real::copy() const {
-        return Real::Factory { getVal() };
+        return RealFactory { getVal() };
     }
 
     void Real::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const {
@@ -41,5 +41,9 @@ namespace oa {
 
         const auto &realOther = dynamic_cast<const Real &>(*result);
         return realOther.getVal() == getVal();
+    }
+
+    std::unique_ptr<oa::Expression> Real::copyWithoutChildren() const {
+        return RealFactory { getVal() };
     }
 }// namespace oa

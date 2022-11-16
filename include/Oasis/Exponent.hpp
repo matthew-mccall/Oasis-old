@@ -11,10 +11,12 @@
 
 namespace oa {
 
+    OA_DECLARE_FACTORY(ExponentFactory, Exponent)
+
     /**
      * The exponent class exponentiates a base to a power
      */
-    class Exponent final : public BinaryExpressionNode {
+    class Exponent final : public BinaryExpressionNode<ExponentFactory> {
     public:
         Exponent();
 
@@ -29,7 +31,6 @@ namespace oa {
          * Copies this expression and its children
          * @return A new Exponent expression whose children are copies of this expression
          */
-        std::unique_ptr<oa::Expression> copy() const override;
 
         /**
          * Evaluates the operands and exponentiates the base to the power if they are Real operands
@@ -38,7 +39,7 @@ namespace oa {
         [[nodiscard]] EvaluateReturnType evaluate() const override;
 
         OA_EXPRESSION_TYPE(EXPONENT)
-        OA_DECLARE_FACTORY(Exponent)
+        OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_ARITHMETIC | EXPRESSION_CATEGORY_BINARY_OPERANDS)
     };
 
 }// namespace oa

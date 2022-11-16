@@ -11,9 +11,9 @@
 
 void testMultiply(double a, double b) {
 
-    std::unique_ptr<oa::Multiply> multiply = oa::Multiply::Factory {
-        oa::Real::Factory { a },
-        oa::Real::Factory { b }
+    std::unique_ptr<oa::Multiply> multiply = oa::MultiplyFactory {
+        oa::RealFactory { a },
+        oa::RealFactory { b }
     };
 
     auto [result, error, cause] = multiply->evaluate();

@@ -6,14 +6,14 @@
 
 #include "spdlog/spdlog.h"
 
-#include "Oasis/Subtract.hpp"
 #include "Oasis/Real.hpp"
+#include "Oasis/Subtract.hpp"
 
 void testSubtract(double a, double b) {
 
-    std::unique_ptr<oa::Subtract> subtract = oa::Subtract::Factory {
-        oa::Real::Factory { a },
-        oa::Real::Factory { b }
+    std::unique_ptr<oa::Subtract> subtract = oa::SubtractFactory {
+        oa::RealFactory { a },
+        oa::RealFactory { b }
     };
 
     auto [result, error, cause] = subtract->evaluate();

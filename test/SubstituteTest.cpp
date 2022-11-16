@@ -6,14 +6,14 @@
 #include "Oasis/Oasis.hpp"
 
 int main(int argc, const char **argv) {
-    auto expr = oa::Multiply::Factory {
-        oa::Real::Factory { 4 },
-        oa::Exponent::Factory {
-                oa::Variable::Factory { "x" },
-                oa::Real::Factory { 2 } }
+    auto expr = oa::MultiplyFactory {
+        oa::RealFactory { 4 },
+        oa::ExponentFactory {
+                oa::VariableFactory { "x" },
+                oa::RealFactory { 2 } }
     };
 
-    auto substituted = oa::substitute(expr, "x", oa::Real::Factory { 3 });
+    auto substituted = oa::substitute(expr, "x", oa::RealFactory { 3 });
 
     assert(substituted);
 

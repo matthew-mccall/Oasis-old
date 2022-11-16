@@ -9,19 +9,20 @@
 
 namespace oa {
 
+    OA_DECLARE_FACTORY(SubtractFactory, Subtract)
+
     /**
      * The Add class subtracts two expressions
      */
-    class Subtract final : public BinaryExpressionNode {
+    class Subtract final : public BinaryExpressionNode<SubtractFactory> {
     public:
         Subtract();
-
         Subtract(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right);
-        std::unique_ptr<oa::Expression> copy() const override;
+
         [[nodiscard]] EvaluateReturnType evaluate() const override;
 
         OA_EXPRESSION_TYPE(SUBTRACT)
-        OA_DECLARE_FACTORY(Subtract)
+        OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_ARITHMETIC | EXPRESSION_CATEGORY_BINARY_OPERANDS)
     };
 
 }// namespace oa

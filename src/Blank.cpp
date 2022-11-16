@@ -15,7 +15,11 @@ namespace oa {
     }
 
     std::unique_ptr<oa::Expression> Blank::copy() const {
-        return Blank::Factory {};
+        return BlankFactory();
+    }
+
+    std::unique_ptr<oa::Expression> Blank::copyWithoutChildren() const {
+        return BlankFactory();
     }
 
     void Blank::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const {

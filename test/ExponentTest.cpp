@@ -11,9 +11,9 @@
 
 void testExponent(double a, double b) {
 
-    std::unique_ptr<oa::Exponent> exponent = oa::Exponent::Factory {
-        oa::Real::Factory { a },
-        oa::Real::Factory { b }
+    std::unique_ptr<oa::Exponent> exponent = oa::ExponentFactory {
+        oa::RealFactory { a },
+        oa::RealFactory { b }
     };
 
     auto [result, error, cause] = exponent->evaluate();
@@ -22,7 +22,7 @@ void testExponent(double a, double b) {
     assert(result->getType() == oa::Expression::Type::REAL);
 
     auto *realResult = dynamic_cast<oa::Real *>(result.get());
-    assert(realResult->getVal() == (pow(a , b)));
+    assert(realResult->getVal() == (pow(a, b)));
 
     spdlog::info("{} ^ {} = {}", a, b, realResult->getVal());
 }

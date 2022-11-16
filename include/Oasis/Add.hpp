@@ -9,10 +9,12 @@
 
 namespace oa {
 
+    OA_DECLARE_FACTORY(AddFactory, Add)
+
     /**
      * The Add class adds two expressions
      */
-    class Add final : public BinaryExpressionNode {
+    class Add final : public BinaryExpressionNode<AddFactory> {
     public:
         Add();
         /**
@@ -23,19 +25,13 @@ namespace oa {
         Add(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right);
 
         /**
-         * Copies this expression and its children
-         * @return A new Add expression whose children are copies of this expression
-         */
-        std::unique_ptr<oa::Expression> copy() const override;
-
-        /**
          * Evaluates the operands and adds them if they are Real operands
          * @return The result, error, and/or cause of error if there is an error
          */
         [[nodiscard]] EvaluateReturnType evaluate() const override;
 
         OA_EXPRESSION_TYPE(ADD)
-        OA_DECLARE_FACTORY(Add)
+        OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_ARITHMETIC | EXPRESSION_CATEGORY_BINARY_OPERANDS)
     };
 
 }// namespace oa

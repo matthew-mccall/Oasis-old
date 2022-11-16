@@ -5,7 +5,7 @@
 #ifndef OASIS_REAL_HPP
 #define OASIS_REAL_HPP
 
-#include "Expression.hpp"
+#include "Utility/LeafExpressionNode.hpp"
 
 namespace oa {
 
@@ -14,20 +14,17 @@ namespace oa {
     /**
      * Represents a Real number
      */
-    class Real final : public Expression {
+    class Real final : public LeafExpressionNode<RealFactory> {
     public:
-        explicit Real(double val);
+        Real() = default;
         Real(const Real &other);
 
-        [[nodiscard]] std::unique_ptr<oa::Expression> copy() const override;
-        [[nodiscard]] std::unique_ptr<oa::Expression> copyWithoutChildren() const override;
+        explicit Real(double val);
 
-        bool addChild(std::unique_ptr<Expression> &&expr) override;
+        [[nodiscard]] std::unique_ptr<oa::Expression> copy() const override;
+        std::unique_ptr<oa::Expression> copyWithoutChildren() const override;
 
         [[nodiscard]] EvaluateReturnType evaluate() const override;
-
-        void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const override;
-        void recurseForEachChild(std::function<void(const Expression &)> func) const override;
 
         [[nodiscard]] double getVal() const;
 
@@ -37,7 +34,7 @@ namespace oa {
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_VALUE)
 
     private:
-        double _val;
+        double _val {};
     };
 
 }// namespace oa

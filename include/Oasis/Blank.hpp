@@ -5,7 +5,7 @@
 #ifndef OASIS_BLANK_HPP
 #define OASIS_BLANK_HPP
 
-#include "Expression.hpp"
+#include "Utility/LeafExpressionNode.hpp"
 
 namespace oa {
 
@@ -16,15 +16,12 @@ namespace oa {
      *
      * It is not meant to be evaluated, but replaced with an actual expression before evaluation
      */
-    class Blank final : public Expression {
+    class Blank final : public LeafExpressionNode<BlankFactory> {
     public:
-        bool addChild(std::unique_ptr<Expression> &&expr) override;
         [[nodiscard]] EvaluateReturnType evaluate() const override;
-        [[nodiscard]] std::unique_ptr<oa::Expression> copy() const override;
-        [[nodiscard]] std::unique_ptr<oa::Expression> copyWithoutChildren() const override;
 
-        void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const override;
-        void recurseForEachChild(std::function<void(const Expression &)> func) const override;
+        [[nodiscard]] std::unique_ptr<oa::Expression> copy() const override;
+        std::unique_ptr<oa::Expression> copyWithoutChildren() const override;
 
         bool operator==(const Expression &other) const override;
 

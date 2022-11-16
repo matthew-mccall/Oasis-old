@@ -14,10 +14,6 @@ namespace oa {
         return EvaluateReturnType { RealFactory { getVal() } };
     }
 
-    bool Real::addChild(std::unique_ptr<Expression> &&expr) {
-        return false;
-    }
-
     double Real::getVal() const {
         return _val;
     }
@@ -25,12 +21,10 @@ namespace oa {
         return RealFactory { getVal() };
     }
 
-    void Real::forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const {
+    std::unique_ptr<oa::Expression> Real::copyWithoutChildren() const {
+        return RealFactory { getVal() };
     }
 
-    void Real::recurseForEachChild(std::function<void(const Expression &)> func) const {
-        func(*this);
-    }
     bool Real::operator==(const Expression &other) const {
 
         auto [result, error, cause] = other.evaluate();
@@ -43,7 +37,4 @@ namespace oa {
         return realOther.getVal() == getVal();
     }
 
-    std::unique_ptr<oa::Expression> Real::copyWithoutChildren() const {
-        return RealFactory { getVal() };
-    }
 }// namespace oa

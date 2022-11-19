@@ -21,10 +21,10 @@ void testAdd(double a, double b) {
     assert(!error);
     assert(result->getType() == oa::Expression::Type::REAL);
 
-    auto *realResult = dynamic_cast<oa::Real *>(result.get());
-    assert(realResult->getVal() == (a + b));
+    auto &realResult = dynamic_cast<oa::Real &>(*result);
+    assert(realResult.getVal() == (a + b));
 
-    spdlog::info("{} + {} = {}", a, b, realResult->getVal());
+    spdlog::info("{} + {} = {}", a, b, realResult.getVal());
 }
 
 int main(int argc, char **argv) {

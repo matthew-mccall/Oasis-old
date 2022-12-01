@@ -31,7 +31,7 @@ namespace oa {
         if (rightResult->getType() == Expression::Type::MULTIPLY) {
             auto &right = dynamic_cast<Multiply &>(*rightResult);
 
-            if ((right.getLeft()->getType() == Expression::Type::REAL) && leftResult == right.getRight()) {
+            if ((right.getLeft()->getType() == Expression::Type::REAL) && (*leftResult == *right.getRight())) {
                 auto &rightCoefficient = dynamic_cast<Real &>(*right.getLeft());
 
                 return EvaluateReturnType {
@@ -45,7 +45,7 @@ namespace oa {
         if (leftResult->getType() == Expression::Type::MULTIPLY) {
             auto &left = dynamic_cast<Multiply &>(*leftResult);
 
-            if ((left.getLeft()->getType() == Expression::Type::REAL) && rightResult == left.getRight()) {
+            if ((left.getLeft()->getType() == Expression::Type::REAL) && (*rightResult == *left.getRight())) {
                 auto &leftCoefficient = dynamic_cast<Real &>(*left.getLeft());
 
                 return EvaluateReturnType {

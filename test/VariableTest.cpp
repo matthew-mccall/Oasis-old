@@ -52,6 +52,25 @@ void testVariableAdd1(double coefficient, const std::unique_ptr<oa::Expression> 
     assert(*result == *expected);
 }
 
+void testVariableAdd2(double coefficient, const std::unique_ptr<oa::Expression> &commonExpression) {
+    std::unique_ptr<oa::Expression> expected = oa::MultiplyFactory {
+        oa::RealFactory { coefficient + 1 },
+        commonExpression->copy()
+    };
+
+    std::unique_ptr<oa::Expression> add = oa::AddFactory {
+        oa::MultiplyFactory {
+                oa::RealFactory { coefficient },
+                commonExpression->copy() },
+        commonExpression->copy()
+    };
+
+    auto [result, error, cause] = add->evaluate();
+
+    assert(!error);
+    assert(*result == *expected);
+}
+
 int main(int argc, char **argv) {
     testVariableAdd(2, 3, oa::VariableFactory { "x" });
     testVariableAdd(4, 5,
@@ -61,4 +80,8 @@ int main(int argc, char **argv) {
 
 
     testVariableAdd1(3, oa::VariableFactory { "k" });
+    testVariableAdd2(8,
+                     oa::MultiplyFactory {
+                             oa::VariableFactory { "x" },
+                             oa::VariableFactory { "y" } });
 }

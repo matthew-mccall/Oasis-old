@@ -15,10 +15,6 @@ include(AddOasisTest)
 add_subdirectory(lib/GSL)
 add_subdirectory(lib/spdlog)
 
-if (${BUILD_OASIS_DESKTOP})
-    add_subdirectory(lib/wxWidgets)
-endif ()
-
 add_library(Oasis include/Oasis/Expression.hpp src/Real.cpp include/Oasis/Real.hpp include/Oasis/Utility/BinaryExpressionNode.hpp include/Oasis/Utility/Types.hpp src/Blank.cpp include/Oasis/Blank.hpp src/Add.cpp include/Oasis/Add.hpp include/Oasis/Subtract.hpp src/Subtract.cpp src/Multiply.cpp include/Oasis/Multiply.hpp src/Divide.cpp include/Oasis/Divide.hpp src/Exponent.cpp include/Oasis/Exponent.hpp src/Variable.cpp include/Oasis/Variable.hpp src/Substitute.cpp include/Oasis/Substitute.hpp include/Oasis/Oasis.hpp src/BinaryEvaluateReturnType.cpp include/Oasis/Utility/LeafExpressionNode.hpp)
 add_library(Oasis::Oasis ALIAS Oasis)
 

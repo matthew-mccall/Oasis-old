@@ -5,6 +5,7 @@
 #ifndef OASIS_EXPRESSION_HPP
 #define OASIS_EXPRESSION_HPP
 
+#include <functional>
 #include <memory>
 
 #include "Utility/Types.hpp"

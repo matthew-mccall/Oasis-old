@@ -21,6 +21,58 @@ namespace oa {
             return EvaluateReturnType { RealFactory { leftReal.getVal() * rightReal.getVal() } };
         }
 
+        if (leftResult->getType() == Expression::Type::EXPONENT && rightResult->getType() == Expression::Type::EXPONENT) {
+            auto &leftExponent = dynamic_cast<Exponent &>(*leftResult);
+            auto &rightExponent = dynamic_cast<Exponent &>(*rightResult);
+
+            if (*leftExponent.getLeft() == *rightExponent.getLeft()) {
+                std::unique_ptr<Add> newExponent = AddFactory { leftExponent.getRight()->copy(), rightExponent.getRight()->copy() };
+                auto [newExponentAddResult, newExponentAddError, newExponentAddCause] = newExponent->evaluate();
+
+                if (newExponentAddError) {
+                    return { {}, newExponentAddError, newExponentAddCause };
+                }
+
+                return EvaluateReturnType { ExponentFactory { leftExponent.getLeft()->copy(), newExponentAddResult->copy() } };
+            }
+        }
+
+        if (rightResult->getType() == Expression::Type::EXPONENT) {
+            auto &right = dynamic_cast<Exponent &>(*rightResult);
+
+            if (*right.getLeft() == *leftResult) {
+
+                std::unique_ptr<Add> newExponent = AddFactory { right.getRight()->copy(), RealFactory { 1 } };
+                auto [newExponentAddResult, newExponentAddError, newExponentAddCause] = newExponent->evaluate();
+
+                if (newExponentAddError) {
+                    return { {}, newExponentAddError, newExponentAddCause };
+                }
+
+                return EvaluateReturnType {
+                    ExponentFactory { leftResult->copy(), newExponentAddResult->copy() }
+                };
+            }
+        }
+
+        if (leftResult->getType() == Expression::Type::EXPONENT) {
+            auto &left = dynamic_cast<Exponent &>(*leftResult);
+
+            if (*left.getLeft() == *rightResult) {
+
+                std::unique_ptr<Add> newExponent = AddFactory { left.getRight()->copy(), RealFactory { 1 } };
+                auto [newExponentAddResult, newExponentAddError, newExponentAddCause] = newExponent->evaluate();
+
+                if (newExponentAddError) {
+                    return { {}, newExponentAddError, newExponentAddCause };
+                }
+
+                return EvaluateReturnType {
+                    ExponentFactory { rightResult->copy(), newExponentAddResult->copy() }
+                };
+            }
+        }
+
         if (leftResult == rightResult) {
             return EvaluateReturnType { ExponentFactory { leftResult->copy(), RealFactory { 2 } } };
         }

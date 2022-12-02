@@ -22,9 +22,9 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install CMake
+      - name: Update GCC
         run: |
-          sudo apt-get install gcc
+          sudo apt-get install gcc-11
           gcc --version
         if: ${{ matrix.os == 'ubuntu-latest' }}
 

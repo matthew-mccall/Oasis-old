@@ -13,23 +13,6 @@
 
 namespace oa {
 
-    class Expression;
-
-    enum EvaluateResultCode {
-        SUCCESS = 0,
-        BLANK,
-    };
-
-    struct EvaluateReturnType {
-        explicit EvaluateReturnType(std::unique_ptr<Expression> &&result) : result(std::move(result)) { }
-
-        EvaluateReturnType(std::unique_ptr<Expression> &&result, EvaluateResultCode error, const Expression *cause) : result(std::move(result)), error(error), cause(cause) { }
-
-        std::unique_ptr<Expression> result;
-        EvaluateResultCode error = SUCCESS;
-        const Expression *cause = nullptr;
-    };
-
     class Expression {
     public:
         enum class Type {

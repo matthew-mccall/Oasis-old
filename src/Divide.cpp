@@ -9,13 +9,20 @@ namespace oa {
     std::unique_ptr<Expression> Divide::evaluate() const {
         auto [leftResult, rightResult] = evaluateOperands();
 
+        if (rightResult->getType() == Expression::Type::REAL) {
+            auto &denominator = dynamic_cast<Real &>(*rightResult);
+
+            if (denominator == Real { 0 }) {
+                throw Exception("Cannot divide by zero!", denominator);
+            }
+        }
+
         if (leftResult->getType() == Expression::Type::REAL && rightResult->getType() == Expression::Type::REAL) {
-            Real *leftReal, *rightReal;
 
-            leftReal = dynamic_cast<Real *>(leftResult.get());
-            rightReal = dynamic_cast<Real *>(rightResult.get());
+            auto &numerator = dynamic_cast<Real &>(*leftResult);
+            auto &denominator = dynamic_cast<Real &>(*rightResult);
 
-            return RealFactory { leftReal->getVal() / rightReal->getVal() };
+            return RealFactory { numerator.getVal() / denominator.getVal() };
         }
 
         return DivideFactory { std::move(leftResult), std::move(rightResult) };

@@ -7,7 +7,7 @@
 namespace oa {
 
     std::unique_ptr<Expression> Blank::evaluate() const {
-        throw Exception("Cannot evaluate Blank expression!", *this);
+        throw BlankException(*this);
     }
 
     std::unique_ptr<oa::Expression> Blank::copy() const {
@@ -21,4 +21,5 @@ namespace oa {
         return BlankFactory();
     }
 
+    BlankException::BlankException(const Expression &cause) : Exception("Cannot evaluate Blank expression!", cause) { }
 }// namespace oa

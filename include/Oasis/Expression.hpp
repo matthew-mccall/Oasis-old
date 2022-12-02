@@ -5,6 +5,7 @@
 #ifndef OASIS_EXPRESSION_HPP
 #define OASIS_EXPRESSION_HPP
 
+#include <concepts>
 #include <functional>
 #include <memory>
 #include <stdexcept>
@@ -46,7 +47,7 @@ namespace oa {
          */
         [[nodiscard]] virtual std::unique_ptr<oa::Expression> copy() const = 0;
 
-        virtual std::unique_ptr<oa::Expression> copyWithoutChildren() const = 0;
+        [[nodiscard]] virtual std::unique_ptr<oa::Expression> copyWithoutChildren() const = 0;
 
         /**
          * Evaluates this expression and child expressions
@@ -77,16 +78,19 @@ namespace oa {
          * @return
          */
         [[nodiscard]] virtual Type getType() const = 0;
-        virtual std::uint16_t getCategories() const = 0;
+        [[nodiscard]] virtual std::uint16_t getCategories() const = 0;
 
         virtual ~Expression() = default;
     };
 
+    template<typename T>
+    concept ExceptionType = std::derived_from<T, std::exception>;
 
-    class Exception : public std::logic_error {
+    template<ExceptionType T = std::logic_error>
+    class Exception : public T {
     public:
-        Exception(const std::string &string, const Expression &cause);
-        const Expression &getCause() const;
+        Exception(const std::string &string, const Expression &cause) : T(string), _cause(cause) { }
+        [[nodiscard]] const Expression &getCause() const { return _cause; };
 
     private:
         const Expression &_cause;

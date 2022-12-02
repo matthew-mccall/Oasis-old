@@ -13,7 +13,7 @@ namespace oa {
             auto &denominator = dynamic_cast<Real &>(*rightResult);
 
             if (denominator == Real { 0 }) {
-                throw Exception("Cannot divide by zero!", denominator);
+                throw DivideByZeroException(denominator);
             }
         }
 
@@ -31,4 +31,6 @@ namespace oa {
     Divide::Divide(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right) : BinaryExpressionNode(std::move(left), std::move(right)) { }
 
     Divide::Divide() : BinaryExpressionNode() { }
+
+    DivideByZeroException::DivideByZeroException(const Expression &cause) : Exception("Cannot divide by zero!", cause) { }
 }// namespace oa

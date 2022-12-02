@@ -29,6 +29,11 @@ namespace oa {
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_VALUE)
     };
 
+    class BlankException : public Exception<> {
+    public:
+        explicit BlankException(const Expression &cause);
+    };
+
 }// namespace oa
 
 #endif//OASIS_BLANK_HPP

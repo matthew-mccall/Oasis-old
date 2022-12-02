@@ -36,6 +36,11 @@ namespace oa {
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_ARITHMETIC | EXPRESSION_CATEGORY_BINARY_OPERANDS)
     };
 
+    class DivideByZeroException : public Exception<std::domain_error> {
+    public:
+        explicit DivideByZeroException(const Expression &cause);
+    };
+
 }// namespace oa
 
 

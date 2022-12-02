@@ -13,8 +13,8 @@ namespace oa {
         std::unique_ptr<Expression> newTree;
 
         if (expression->getType() == Expression::Type::VARIABLE) {
-            const Variable *variable = dynamic_cast<Variable *>(expression.get());
-            if (variable->getRep() == var) {
+            const auto &variable = dynamic_cast<Variable &>(*expression);
+            if (variable.getRep() == var) {
                 return val->copy();
             }
         }

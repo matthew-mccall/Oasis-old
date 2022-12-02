@@ -29,7 +29,7 @@ namespace oa {
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_VALUE)
     };
 
-    class BlankException : public Exception<> {
+    class BlankException : public Exception<std::logic_error> {
     public:
         explicit BlankException(const Expression &cause);
     };

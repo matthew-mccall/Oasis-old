@@ -21,5 +21,5 @@ namespace oa {
         return BlankFactory();
     }
 
-    BlankException::BlankException(const Expression &cause) : Exception("Cannot evaluate Blank expression!", cause) { }
+    BlankException::BlankException(const Expression &cause) : Exception(cause, "Cannot evaluate Blank expression!") { }
 }// namespace oa

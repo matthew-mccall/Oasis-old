@@ -34,4 +34,26 @@ int main(int argc, char **argv) {
     testDivide(3.14, 2.29);
     testDivide(-69, 42);
     testDivide(6.28, -2);
+
+    try {
+        std::unique_ptr<oa::Divide> divide = oa::DivideFactory {
+            oa::RealFactory { 4 },
+            oa::RealFactory { 0 }
+        };
+
+        auto result = divide->evaluate();
+    } catch (const std::domain_error &e) {
+        spdlog::info("Successfully caught divide by zero domain_error");
+    }
+
+    try {
+        std::unique_ptr<oa::Divide> divide = oa::DivideFactory {
+            oa::RealFactory { 4 },
+            oa::RealFactory { 0 }
+        };
+
+        auto result = divide->evaluate();
+    } catch (const oa::DivideByZeroException &e) {
+        spdlog::info("Successfully caught DivideByZeroException");
+    }
 }

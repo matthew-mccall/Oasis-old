@@ -86,11 +86,20 @@ namespace oa {
     template<typename T>
     concept ExceptionType = std::derived_from<T, std::exception>;
 
-    template<ExceptionType T = std::logic_error>
+    template<ExceptionType T = std::exception>
     class Exception : public T {
     public:
-        Exception(const std::string &string, const Expression &cause) : T(string), _cause(cause) { }
+        template<typename... Ts>
+        Exception(const Expression &cause, Ts &&...args) : T(std::forward<Ts>(args)...), _cause(cause) { }
+        Exception(const Exception<> &other) : T(other), _cause(other._cause) { }
+
         [[nodiscard]] const Expression &getCause() const { return _cause; };
+
+        operator Exception<>() {
+            return *this;
+        }
+
+        virtual ~Exception() = default;
 
     private:
         const Expression &_cause;

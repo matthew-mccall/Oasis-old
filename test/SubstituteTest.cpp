@@ -17,9 +17,7 @@ int main(int argc, const char **argv) {
 
     assert(substituted);
 
-    auto [result, error, cause] = substituted->evaluate();
-
-    assert(!error);
+    auto result = substituted->evaluate();
     assert(result->getType() == oa::Expression::Type::REAL);
 
     auto *realResult = dynamic_cast<oa::Real *>(result.get());

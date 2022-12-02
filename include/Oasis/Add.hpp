@@ -28,7 +28,7 @@ namespace oa {
          * Evaluates the operands and adds them if they are Real operands
          * @return The result, error, and/or cause of error if there is an error
          */
-        [[nodiscard]] EvaluateReturnType evaluate() const override;
+        [[nodiscard]] std::unique_ptr<Expression> evaluate() const override;
 
         OA_EXPRESSION_TYPE(ADD)
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_ARITHMETIC | EXPRESSION_CATEGORY_BINARY_OPERANDS)

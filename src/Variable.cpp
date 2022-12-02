@@ -8,8 +8,8 @@ namespace oa {
     Variable::Variable(std::string rep) : _rep(rep) { }
     Variable::Variable(oa::Variable &other) : _rep(other._rep) { }
 
-    EvaluateReturnType Variable::evaluate() const {
-        return EvaluateReturnType { VariableFactory { getRep() } };
+    std::unique_ptr<Expression> Variable::evaluate() const {
+        return VariableFactory { getRep() };
     }
 
     bool Variable::addChild(std::unique_ptr<Expression> &&expr) {
@@ -33,7 +33,7 @@ namespace oa {
 
     bool Variable::operator==(const Expression &other) const {
 
-        auto [result, error, cause] = other.evaluate();
+        auto result = other.evaluate();
 
         if (result->getType() != Expression::Type::VARIABLE) {
             return false;

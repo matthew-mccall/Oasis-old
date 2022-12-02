@@ -16,9 +16,7 @@ void testExponent(double a, double b) {
         oa::RealFactory { b }
     };
 
-    auto [result, error, cause] = exponent->evaluate();
-
-    assert(!error);
+    auto result = exponent->evaluate();
     assert(result->getType() == oa::Expression::Type::REAL);
 
     auto *realResult = dynamic_cast<oa::Real *>(result.get());

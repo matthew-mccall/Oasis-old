@@ -16,9 +16,7 @@ void testSubtract(double a, double b) {
         oa::RealFactory { b }
     };
 
-    auto [result, error, cause] = subtract->evaluate();
-
-    assert(!error);
+    auto result = subtract->evaluate();
     assert(result->getType() == oa::Expression::Type::REAL);
 
     auto *realResult = dynamic_cast<oa::Real *>(result.get());

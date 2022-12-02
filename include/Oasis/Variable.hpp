@@ -25,7 +25,7 @@ namespace oa {
 
         bool addChild(std::unique_ptr<Expression> &&expr) override;
 
-        [[nodiscard]] EvaluateReturnType evaluate() const override;
+        [[nodiscard]] std::unique_ptr<Expression> evaluate() const override;
 
         void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const override;
         void recurseForEachChild(std::function<void(const Expression &)> func) const override;

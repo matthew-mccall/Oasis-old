@@ -16,9 +16,7 @@ void testAdd(double a, double b) {
         oa::RealFactory { b }
     };
 
-    auto [result, error, cause] = add->evaluate();
-
-    assert(!error);
+    auto result = add->evaluate();
     assert(result->getType() == oa::Expression::Type::REAL);
 
     auto &realResult = dynamic_cast<oa::Real &>(*result);

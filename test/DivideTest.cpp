@@ -16,9 +16,7 @@ void testDivide(double a, double b) {
         oa::RealFactory { b }
     };
 
-    auto [result, error, cause] = divide->evaluate();
-
-    assert(!error);
+    auto result = divide->evaluate();
     assert(result->getType() == oa::Expression::Type::REAL);
 
     auto *realResult = dynamic_cast<oa::Real *>(result.get());

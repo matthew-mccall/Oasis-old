@@ -5,26 +5,21 @@
 #include "Oasis/Oasis.hpp"
 
 namespace oa {
-    EvaluateReturnType Add::evaluate() const {
-        auto [leftResult, rightResult, error, cause] = evaluateOperands();
-
-        if (error) {
-            return { nullptr, error, cause };
-        }
+    std::unique_ptr<Expression> Add::evaluate() const {
+        auto [leftResult, rightResult] = evaluateOperands();
 
         if (leftResult->getType() == Expression::Type::REAL && rightResult->getType() == Expression::Type::REAL) {
 
             auto &leftReal = dynamic_cast<Real &>(*leftResult);
             auto &rightReal = dynamic_cast<Real &>(*rightResult);
 
-            return EvaluateReturnType { RealFactory { leftReal.getVal() + rightReal.getVal() } };
+            return RealFactory { leftReal.getVal() + rightReal.getVal() };
         }
 
         if (*leftResult == *rightResult) {
-            return EvaluateReturnType {
-                MultiplyFactory {
-                        RealFactory { 2 },
-                        leftResult->copy() }
+            return MultiplyFactory {
+                RealFactory { 2 },
+                leftResult->copy()
             };
         }
 
@@ -34,10 +29,9 @@ namespace oa {
             if ((right.getLeft()->getType() == Expression::Type::REAL) && (*leftResult == *right.getRight())) {
                 auto &rightCoefficient = dynamic_cast<Real &>(*right.getLeft());
 
-                return EvaluateReturnType {
-                    MultiplyFactory {
-                            RealFactory { rightCoefficient.getVal() + 1 },
-                            leftResult->copy() }
+                return MultiplyFactory {
+                    RealFactory { rightCoefficient.getVal() + 1 },
+                    leftResult->copy()
                 };
             }
         }
@@ -48,10 +42,9 @@ namespace oa {
             if ((left.getLeft()->getType() == Expression::Type::REAL) && (*rightResult == *left.getRight())) {
                 auto &leftCoefficient = dynamic_cast<Real &>(*left.getLeft());
 
-                return EvaluateReturnType {
-                    MultiplyFactory {
-                            RealFactory { leftCoefficient.getVal() + 1 },
-                            rightResult->copy() }
+                return MultiplyFactory {
+                    RealFactory { leftCoefficient.getVal() + 1 },
+                    rightResult->copy()
                 };
             }
         }
@@ -68,15 +61,14 @@ namespace oa {
                 auto &leftCoefficient = dynamic_cast<Real &>(*left.getLeft());
                 auto &rightCoefficient = dynamic_cast<Real &>(*right.getLeft());
 
-                return EvaluateReturnType {
-                    MultiplyFactory {
-                            RealFactory { (leftCoefficient.getVal() + rightCoefficient.getVal()) },
-                            left.getRight()->copy() }
+                return MultiplyFactory {
+                    RealFactory { (leftCoefficient.getVal() + rightCoefficient.getVal()) },
+                    left.getRight()->copy()
                 };
             }
         }
 
-        return EvaluateReturnType { AddFactory { std::move(leftResult), std::move(rightResult) } };
+        return AddFactory { std::move(leftResult), std::move(rightResult) };
     }
 
     Add::Add(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right) : BinaryExpressionNode(std::move(left), std::move(right)) { }

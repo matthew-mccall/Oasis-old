@@ -7,12 +7,8 @@
 #include <cmath>
 
 namespace oa {
-    EvaluateReturnType Exponent::evaluate() const {
-        auto [leftResult, rightResult, error, cause] = evaluateOperands();
-
-        if (error) {
-            return { nullptr, error, cause };
-        }
+    std::unique_ptr<Expression> Exponent::evaluate() const {
+        auto [leftResult, rightResult] = evaluateOperands();
 
         if (leftResult->getType() == Expression::Type::REAL && rightResult->getType() == Expression::Type::REAL) {
             Real *leftReal, *rightReal;
@@ -20,10 +16,10 @@ namespace oa {
             leftReal = dynamic_cast<Real *>(leftResult.get());
             rightReal = dynamic_cast<Real *>(rightResult.get());
 
-            return EvaluateReturnType { RealFactory { pow(leftReal->getVal(), rightReal->getVal()) } };
+            return RealFactory { pow(leftReal->getVal(), rightReal->getVal()) };
         }
 
-        return EvaluateReturnType { ExponentFactory { std::move(leftResult), std::move(rightResult) } };
+        return ExponentFactory { std::move(leftResult), std::move(rightResult) };
     }
 
     Exponent::Exponent(std::unique_ptr<Expression> &&base, std::unique_ptr<Expression> &&power) : BinaryExpressionNode(std::move(base), std::move(power)) { }

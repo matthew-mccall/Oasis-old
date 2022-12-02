@@ -7,18 +7,14 @@
 #include "Oasis/Real.hpp"
 
 namespace oa {
-    EvaluateReturnType Multiply::evaluate() const {
-        auto [leftResult, rightResult, error, cause] = evaluateOperands();
-
-        if (error) {
-            return { nullptr, error, cause };
-        }
+    std::unique_ptr<Expression> Multiply::evaluate() const {
+        auto [leftResult, rightResult] = evaluateOperands();
 
         if (leftResult->getType() == Expression::Type::REAL && rightResult->getType() == Expression::Type::REAL) {
             auto &leftReal = dynamic_cast<Real &>(*leftResult);
             auto &rightReal = dynamic_cast<Real &>(*rightResult);
 
-            return EvaluateReturnType { RealFactory { leftReal.getVal() * rightReal.getVal() } };
+            return RealFactory { leftReal.getVal() * rightReal.getVal() };
         }
 
         if (leftResult->getType() == Expression::Type::EXPONENT && rightResult->getType() == Expression::Type::EXPONENT) {
@@ -27,13 +23,9 @@ namespace oa {
 
             if (*leftExponent.getLeft() == *rightExponent.getLeft()) {
                 std::unique_ptr<Add> newExponent = AddFactory { leftExponent.getRight()->copy(), rightExponent.getRight()->copy() };
-                auto [newExponentAddResult, newExponentAddError, newExponentAddCause] = newExponent->evaluate();
+                auto newExponentAddResult = newExponent->evaluate();
 
-                if (newExponentAddError) {
-                    return { {}, newExponentAddError, newExponentAddCause };
-                }
-
-                return EvaluateReturnType { ExponentFactory { leftExponent.getLeft()->copy(), newExponentAddResult->copy() } };
+                return ExponentFactory { leftExponent.getLeft()->copy(), newExponentAddResult->copy() };
             }
         }
 
@@ -43,15 +35,9 @@ namespace oa {
             if (*right.getLeft() == *leftResult) {
 
                 std::unique_ptr<Add> newExponent = AddFactory { right.getRight()->copy(), RealFactory { 1 } };
-                auto [newExponentAddResult, newExponentAddError, newExponentAddCause] = newExponent->evaluate();
+                auto newExponentAddResult = newExponent->evaluate();
 
-                if (newExponentAddError) {
-                    return { {}, newExponentAddError, newExponentAddCause };
-                }
-
-                return EvaluateReturnType {
-                    ExponentFactory { leftResult->copy(), newExponentAddResult->copy() }
-                };
+                return ExponentFactory { leftResult->copy(), newExponentAddResult->copy() };
             }
         }
 
@@ -61,27 +47,21 @@ namespace oa {
             if (*left.getLeft() == *rightResult) {
 
                 std::unique_ptr<Add> newExponent = AddFactory { left.getRight()->copy(), RealFactory { 1 } };
-                auto [newExponentAddResult, newExponentAddError, newExponentAddCause] = newExponent->evaluate();
+                auto newExponentAddResult = newExponent->evaluate();
 
-                if (newExponentAddError) {
-                    return { {}, newExponentAddError, newExponentAddCause };
-                }
-
-                return EvaluateReturnType {
-                    ExponentFactory { rightResult->copy(), newExponentAddResult->copy() }
-                };
+                return ExponentFactory { rightResult->copy(), newExponentAddResult->copy() };
             }
         }
 
         if (leftResult == rightResult) {
-            return EvaluateReturnType { ExponentFactory { leftResult->copy(), RealFactory { 2 } } };
+            return ExponentFactory { leftResult->copy(), RealFactory { 2 } };
         }
 
         if (rightResult->getType() == Expression::Type::REAL) {// Move coefficients to the left for standard formatting
-            return EvaluateReturnType { MultiplyFactory { std::move(rightResult), std::move(leftResult) } };
+            return MultiplyFactory { std::move(rightResult), std::move(leftResult) };
         }
 
-        return EvaluateReturnType { MultiplyFactory { std::move(leftResult), std::move(rightResult) } };
+        return MultiplyFactory { std::move(leftResult), std::move(rightResult) };
     }
 
     Multiply::Multiply(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right) : BinaryExpressionNode(std::move(left), std::move(right)) { }

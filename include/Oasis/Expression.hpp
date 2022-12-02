@@ -7,6 +7,7 @@
 
 #include <functional>
 #include <memory>
+#include <stdexcept>
 
 #include "Utility/Types.hpp"
 
@@ -68,7 +69,7 @@ namespace oa {
          * Evaluates this expression and child expressions
          * @return The evaluated expression
          */
-        [[nodiscard]] virtual EvaluateReturnType evaluate() const = 0;
+        [[nodiscard]] virtual std::unique_ptr<Expression> evaluate() const = 0;
 
         /**
          * Calls func for each child
@@ -98,7 +99,17 @@ namespace oa {
         virtual ~Expression() = default;
     };
 
-}// namespace oa
+
+    class Exception : public std::logic_error {
+    public:
+        Exception(const std::string &string, const Expression &cause);
+        const Expression &getCause() const;
+
+    private:
+        const Expression &_cause;
+    };
+
+};// namespace oa
 
 #define OA_EXPRESSION_TYPE(type)                                               \
     static Expression::Type getStaticType() { return Expression::Type::type; } \

@@ -19,7 +19,7 @@ namespace oa {
         Subtract();
         Subtract(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right);
 
-        [[nodiscard]] EvaluateReturnType evaluate() const override;
+        [[nodiscard]] std::unique_ptr<Expression> evaluate() const override;
 
         OA_EXPRESSION_TYPE(SUBTRACT)
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_ARITHMETIC | EXPRESSION_CATEGORY_BINARY_OPERANDS)

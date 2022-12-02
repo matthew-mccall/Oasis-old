@@ -15,14 +15,8 @@
 namespace oa {
 
     struct BinaryEvaluateReturnType {
-
-        BinaryEvaluateReturnType(std::unique_ptr<Expression> &&leftResult, std::unique_ptr<Expression> &&rightResult);
-        BinaryEvaluateReturnType(std::unique_ptr<Expression> &&leftResult, std::unique_ptr<Expression> &&rightResult, EvaluateResultCode error, const Expression *cause);
-
         std::unique_ptr<Expression> leftResult;
         std::unique_ptr<Expression> rightResult;
-        EvaluateResultCode error = SUCCESS;
-        const Expression *cause = nullptr;
     };
 
     /**
@@ -70,17 +64,8 @@ namespace oa {
 
     template<typename T>
     BinaryEvaluateReturnType BinaryExpressionNode<T>::evaluateOperands() const {
-        auto [leftResult, leftError, leftCause] = _left->evaluate();
-
-        if (leftError) {
-            return { nullptr, nullptr, leftError, leftCause };
-        }
-
-        auto [rightResult, rightError, rightCause] = _right->evaluate();
-
-        if (rightError) {
-            return { nullptr, nullptr, rightError, rightCause };
-        }
+        auto leftResult = _left->evaluate();
+        auto rightResult = _right->evaluate();
 
         return { std::move(leftResult), std::move(rightResult) };
     }
@@ -108,11 +93,8 @@ namespace oa {
     template<typename T>
     bool BinaryExpressionNode<T>::operator==(const Expression &other) const {
 
-        auto [result, error, cause] = evaluate();
-        assert(!error);
-
-        auto [otherResult, otherError, otherCause] = evaluate();
-        assert(!otherError);
+        auto result = evaluate();
+        auto otherResult = evaluate();
 
         if (
                 (result->getCategories() & EXPRESSION_CATEGORY_BINARY_OPERANDS) &&
@@ -124,11 +106,8 @@ namespace oa {
             const auto &binaryResult = dynamic_cast<const BinaryExpressionNode &>(*result);
             const auto &binaryOther = dynamic_cast<const BinaryExpressionNode &>(*otherResult);
 
-            auto [leftResult, rightResult, error1, cause1] = binaryResult.evaluateOperands();
-            assert(!error1);
-
-            auto [otherLeftResult, otherRightResult, otherError1, otherCause1] = binaryOther.evaluateOperands();
-            assert(!otherError1);
+            auto [leftResult, rightResult] = binaryResult.evaluateOperands();
+            auto [otherLeftResult, otherRightResult] = binaryOther.evaluateOperands();
 
             return (*leftResult == *otherLeftResult) && (*rightResult == *otherRightResult);
         }

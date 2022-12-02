@@ -24,7 +24,7 @@ namespace oa {
         [[nodiscard]] std::unique_ptr<oa::Expression> copy() const override;
         std::unique_ptr<oa::Expression> copyWithoutChildren() const override;
 
-        [[nodiscard]] EvaluateReturnType evaluate() const override;
+        [[nodiscard]] std::unique_ptr<Expression> evaluate() const override;
 
         [[nodiscard]] double getVal() const;
 

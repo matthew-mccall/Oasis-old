@@ -16,9 +16,7 @@ void testMultiply(double a, double b) {
         oa::RealFactory { b }
     };
 
-    auto [result, error, cause] = multiply->evaluate();
-
-    assert(!error);
+    auto result = multiply->evaluate();
     assert(result->getType() == oa::Expression::Type::REAL);
 
     auto *realResult = dynamic_cast<oa::Real *>(result.get());

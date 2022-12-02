@@ -10,8 +10,8 @@ namespace oa {
     Real::Real(const Real &other) : _val(other._val) {
     }
 
-    EvaluateReturnType Real::evaluate() const {
-        return EvaluateReturnType { RealFactory { getVal() } };
+    std::unique_ptr<Expression> Real::evaluate() const {
+        return RealFactory { getVal() };
     }
 
     double Real::getVal() const {
@@ -27,7 +27,7 @@ namespace oa {
 
     bool Real::operator==(const Expression &other) const {
 
-        auto [result, error, cause] = other.evaluate();
+        auto result = other.evaluate();
 
         if (result->getType() != Expression::Type::REAL) {
             return false;

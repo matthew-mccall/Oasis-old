@@ -27,9 +27,7 @@ void testVariableAdd(double leftCoefficient, double rightCoefficient, const std:
                 commonExpression->copy() }
     };
 
-    auto [result, error, cause] = add->evaluate();
-
-    assert(!error);
+    auto result = add->evaluate();
     assert(*result == *expected);
 }
 
@@ -46,9 +44,7 @@ void testVariableAdd1(double coefficient, const std::unique_ptr<oa::Expression> 
                 commonExpression->copy() }
     };
 
-    auto [result, error, cause] = add->evaluate();
-
-    assert(!error);
+    auto result = add->evaluate();
     assert(*result == *expected);
 }
 
@@ -65,9 +61,7 @@ void testVariableAdd2(double coefficient, const std::unique_ptr<oa::Expression> 
         commonExpression->copy()
     };
 
-    auto [result, error, cause] = add->evaluate();
-
-    assert(!error);
+    auto result = add->evaluate();
     assert(*result == *expected);
 }
 

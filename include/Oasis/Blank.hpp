@@ -18,7 +18,7 @@ namespace oa {
     public:
         [[nodiscard]] std::unique_ptr<Expression> evaluate() const override;
 
-        bool operator==(const Expression &other) const override;
+        [[nodiscard]] bool equals(const Expression &other) const override;
 
         OA_EXPRESSION_TYPE(BLANK)
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_VALUE)

@@ -67,7 +67,9 @@ namespace oa {
          */
         virtual void recurseForEachChild(std::function<void(const Expression &)> func) const = 0;
 
-        virtual bool operator==(const Expression &other) const = 0;
+        [[nodiscard]] virtual bool equals(const Expression &other) const = 0;
+
+        bool operator==(const Expression &other) const { return other.equals(*this); };
 
         bool operator!=(const Expression &other) const {
             return !(*this == other);
@@ -90,22 +92,22 @@ namespace oa {
     class Exception : public T {
     public:
         template<typename... Ts>
-        Exception(const Expression &cause, Ts &&...args) : T(std::forward<Ts>(args)...), _cause(cause) { }
-        Exception(const Exception<> &other) : T(other), _cause(other._cause) { }
+        Exception(const Expression &cause, Ts &&...args) : T(std::forward<Ts>(args)...), _cause(cause) { }// NOLINT(google-explicit-constructor)
+        Exception(const Exception<> &other) : T(other), _cause(other._cause) { }                          // NOLINT(google-explicit-constructor)
 
         [[nodiscard]] const Expression &getCause() const { return _cause; };
 
-        operator Exception<>() {
+        operator Exception<>() {// NOLINT(google-explicit-constructor)
             return *this;
         }
 
-        virtual ~Exception() = default;
+        ~Exception() override = default;
 
     private:
         const Expression &_cause;
     };
 
-};// namespace oa
+}// namespace oa
 
 #define OA_EXPRESSION_TYPE(type)                                               \
     static Expression::Type getStaticType() { return Expression::Type::type; } \

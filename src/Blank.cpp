@@ -10,7 +10,7 @@ namespace oa {
         throw BlankException(*this);
     }
 
-    bool Blank::operator==(const Expression &other) const {
+    bool Blank::equals(const Expression &other) const {
         return other.getType() == Expression::Type::BLANK;
     }
 

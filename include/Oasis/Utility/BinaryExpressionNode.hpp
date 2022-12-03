@@ -35,7 +35,7 @@ namespace oa {
         void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const final;
         void recurseForEachChild(std::function<void(const Expression &)> func) const override;
 
-        bool operator==(const Expression &other) const final;
+        bool equals(const Expression &other) const final;
 
         [[nodiscard]] const std::unique_ptr<Expression> &getLeft() const;
         [[nodiscard]] const std::unique_ptr<Expression> &getRight() const;
@@ -91,7 +91,7 @@ namespace oa {
     }
 
     template<typename T>
-    bool BinaryExpressionNode<T>::operator==(const Expression &other) const {
+    bool BinaryExpressionNode<T>::equals(const Expression &other) const {
 
         auto result = evaluate();
         auto otherResult = evaluate();

@@ -25,7 +25,7 @@ namespace oa {
         return RealFactory { getVal() };
     }
 
-    bool Real::operator==(const Expression &other) const {
+    bool Real::equals(const Expression &other) const {
 
         auto result = other.evaluate();
 

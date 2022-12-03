@@ -17,7 +17,7 @@ namespace oa {
         return _rep;
     }
 
-    bool Variable::operator==(const Expression &other) const {
+    bool Variable::equals(const Expression &other) const {
 
         auto result = other.evaluate();
 

@@ -15,7 +15,18 @@ namespace oa {
         bool addChild(std::unique_ptr<Expression> &&expr) final;
         void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const final;
         void recurseForEachChild(std::function<void(const Expression &)> func) const final;
+
+        std::unique_ptr<oa::Expression> copy() const override;
+        std::unique_ptr<oa::Expression> copyWithoutChildren() const override;
     };
+    template<typename T>
+    std::unique_ptr<oa::Expression> LeafExpressionNode<T>::copy() const {
+        return std::make_unique<T>(dynamic_cast<const T &>(*this));
+    }
+    template<typename T>
+    std::unique_ptr<oa::Expression> LeafExpressionNode<T>::copyWithoutChildren() const {
+        return std::make_unique<T>(dynamic_cast<const T &>(*this));
+    }
 
     template<typename T>
     bool LeafExpressionNode<T>::addChild(std::unique_ptr<Expression> &&expr) {

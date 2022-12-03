@@ -9,12 +9,10 @@
 
 namespace oa {
 
-    OA_DECLARE_FACTORY(MultiplyFactory, Multiply)
-
     /**
      * The Multiply class multiplies two expressions
      */
-    class Multiply final : public BinaryExpressionNode<MultiplyFactory> {
+    class Multiply final : public BinaryExpressionNode<Multiply> {
     public:
         Multiply();
 
@@ -34,6 +32,8 @@ namespace oa {
         OA_EXPRESSION_TYPE(MULTIPLY)
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_ARITHMETIC | EXPRESSION_CATEGORY_BINARY_OPERANDS)
     };
+
+    OA_DECLARE_FACTORY(MultiplyFactory, Multiply)
 
 }// namespace oa
 

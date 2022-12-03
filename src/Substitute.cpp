@@ -22,7 +22,8 @@ namespace oa {
         if (expression) {
             newTree = expression->copyWithoutChildren();
             expression->forEachChild([&newTree, var, &val](const std::unique_ptr<Expression> &expr) {
-                assert(newTree->addChild(substitute(expr, var, val)));
+                bool success = newTree->addChild(substitute(expr, var, val));
+                assert(success);
             });
 
             return newTree;

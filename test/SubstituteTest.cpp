@@ -6,12 +6,15 @@
 #include "Oasis/Oasis.hpp"
 
 int main(int argc, const char **argv) {
-    auto expr = oa::MultiplyFactory {
+
+    std::unique_ptr<oa::Expression> expr = oa::MultiplyFactory {
         oa::RealFactory { 4 },
         oa::ExponentFactory {
                 oa::VariableFactory { "x" },
                 oa::RealFactory { 2 } }
     };
+
+    assert(expr);
 
     auto substituted = oa::substitute(expr, "x", oa::RealFactory { 3 });
 

@@ -10,12 +10,10 @@
 
 namespace oa {
 
-    OA_DECLARE_FACTORY(DivideFactory, Divide)
-
     /**
      * The Divide class adds divides expressions
      */
-    class Divide final : public BinaryExpressionNode<DivideFactory> {
+    class Divide final : public BinaryExpressionNode<Divide> {
     public:
         Divide();
 
@@ -35,6 +33,8 @@ namespace oa {
         OA_EXPRESSION_TYPE(DIVIDE)
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_ARITHMETIC | EXPRESSION_CATEGORY_BINARY_OPERANDS)
     };
+
+    OA_DECLARE_FACTORY(DivideFactory, Divide)
 
     class DivideByZeroException : public Exception<std::domain_error> {
     public:

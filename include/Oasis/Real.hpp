@@ -9,12 +9,10 @@
 
 namespace oa {
 
-    OA_DECLARE_FACTORY(RealFactory, Real)
-
     /**
      * Represents a Real number
      */
-    class Real final : public LeafExpressionNode<RealFactory> {
+    class Real final : public LeafExpressionNode<Real> {
     public:
         Real() = default;
         Real(const Real &other);
@@ -36,6 +34,8 @@ namespace oa {
     private:
         double _val {};
     };
+
+    OA_DECLARE_FACTORY(RealFactory, Real)
 
 }// namespace oa
 

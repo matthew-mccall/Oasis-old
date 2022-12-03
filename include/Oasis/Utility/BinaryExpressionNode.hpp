@@ -127,11 +127,11 @@ namespace oa {
 
     template<typename T>
     std::unique_ptr<oa::Expression> BinaryExpressionNode<T>::copy() const {
-        return T(_left->copy(), _right->copy());
+        return std::make_unique<T>(_left->copy(), _right->copy());
     }
     template<typename T>
     std::unique_ptr<oa::Expression> BinaryExpressionNode<T>::copyWithoutChildren() const {
-        return T();
+        return std::make_unique<T>();
     }
 
 }// namespace oa

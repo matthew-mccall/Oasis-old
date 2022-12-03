@@ -117,8 +117,6 @@ namespace oa {
 
 #define OA_DECLARE_FACTORY(factoryName, type)                                                            \
                                                                                                          \
-    class type;                                                                                          \
-                                                                                                         \
     class factoryName {                                                                                  \
     public:                                                                                              \
         template<typename... Ts>                                                                         \
@@ -126,8 +124,7 @@ namespace oa {
                                                                                                          \
         operator std::unique_ptr<Expression>() {                                                         \
                                                                                                          \
-            std::unique_ptr<Expression> ptr;                                                             \
-            ptr.reset((Expression *) _ptr.release());                                                    \
+            std::unique_ptr<Expression> ptr { _ptr.release() };                                          \
             return ptr;                                                                                  \
         }                                                                                                \
                                                                                                          \

@@ -9,19 +9,14 @@
 
 namespace oa {
 
-    OA_DECLARE_FACTORY(BlankFactory, Blank)
-
     /**
      * A Blank expression is a placeholder.
      *
      * It is not meant to be evaluated, but replaced with an actual expression before evaluation
      */
-    class Blank final : public LeafExpressionNode<BlankFactory> {
+    class Blank final : public LeafExpressionNode<Blank> {
     public:
         [[nodiscard]] std::unique_ptr<Expression> evaluate() const override;
-
-        [[nodiscard]] std::unique_ptr<oa::Expression> copy() const override;
-        std::unique_ptr<oa::Expression> copyWithoutChildren() const override;
 
         bool operator==(const Expression &other) const override;
 
@@ -33,6 +28,8 @@ namespace oa {
     public:
         explicit BlankException(const Expression &cause);
     };
+
+    OA_DECLARE_FACTORY(BlankFactory, Blank)
 
 }// namespace oa
 

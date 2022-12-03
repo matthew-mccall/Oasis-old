@@ -10,15 +10,8 @@ namespace oa {
         throw BlankException(*this);
     }
 
-    std::unique_ptr<oa::Expression> Blank::copy() const {
-        return BlankFactory();
-    }
-
     bool Blank::operator==(const Expression &other) const {
         return other.getType() == Expression::Type::BLANK;
-    }
-    std::unique_ptr<oa::Expression> Blank::copyWithoutChildren() const {
-        return BlankFactory();
     }
 
     BlankException::BlankException(const Expression &cause) : Exception(cause, "Cannot evaluate Blank expression!") { }

@@ -6,31 +6,20 @@
 #define OASIS_VARIABLE_HPP
 
 #include "Expression.hpp"
-#include <string>//may change string to char later
+#include "Utility/LeafExpressionNode.hpp"
 
 namespace oa {
-
-    OA_DECLARE_FACTORY(VariableFactory, Variable)
 
     /**
      * An arbitrary variable
      */
-    class Variable final : public Expression {
+    class Variable final : public LeafExpressionNode<Variable> {
     public:
         explicit Variable(std::string rep);
-        Variable(Variable &other);
-
-        [[nodiscard]] std::unique_ptr<oa::Expression> copy() const override;
-        std::unique_ptr<oa::Expression> copyWithoutChildren() const override;
-
-        bool addChild(std::unique_ptr<Expression> &&expr) override;
+        Variable(const Variable &other);
 
         [[nodiscard]] std::unique_ptr<Expression> evaluate() const override;
 
-        void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const override;
-        void recurseForEachChild(std::function<void(const Expression &)> func) const override;
-
-        //[[nodiscard]] double getVal() const;
         [[nodiscard]] std::string getRep() const;
 
         bool operator==(const Expression &other) const override;
@@ -39,9 +28,10 @@ namespace oa {
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_VALUE)
 
     private:
-        //double _val;
         std::string _rep;//representation eg x
     };
+
+    OA_DECLARE_FACTORY(VariableFactory, Variable)
 
 }// namespace oa
 

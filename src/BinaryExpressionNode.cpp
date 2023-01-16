@@ -82,22 +82,13 @@ namespace oa {
     }
 
     bool BinaryExpressionNode::structurallyEquals(const Expression &other) const {
-        auto result = evaluate();
-        auto otherResult = other.evaluate();
-
-        if (!(result->getCategories() & EXPRESSION_CATEGORY_BINARY_OPERANDS) ||
-            !(otherResult->getCategories() & EXPRESSION_CATEGORY_BINARY_OPERANDS)) {
-            return result->structurallyEquals(*otherResult);
-        }
-
         if (other.getType() != this->getType()) {
             return false;
         }
 
-        const auto &binaryResult = dynamic_cast<const BinaryExpressionNode &>(*result);
-        const auto &binaryOther = dynamic_cast<const BinaryExpressionNode &>(*otherResult);
+        const auto &binaryOther = dynamic_cast<const BinaryExpressionNode &>(other);
 
-        auto [leftResult, rightResult] = binaryResult.evaluateOperands();
+        auto [leftResult, rightResult] = evaluateOperands();
         //        auto [otherLeftResult, otherRightResult] = binaryOther.evaluateOperands();
 
         // We will treat blanks as wildcards, so we don't need to check the other side.
@@ -105,9 +96,9 @@ namespace oa {
                ((binaryOther._right->getType() == Expression::Type::BLANK) || (rightResult->structurallyEquals(*binaryOther._right->evaluate())));
     }
 
-    std::optional<std::unique_ptr<Expression>> BinaryExpressionNode::evaluateIfSatisfiesPredicate(const std::unique_ptr<Expression> &predicate, const std::function<std::unique_ptr<Expression>(const Expression &)> &func) const {
+    std::optional<std::unique_ptr<Expression>> BinaryExpressionNode::evaluateIfSatisfiesPredicate(const std::unique_ptr<Expression> &predicate, const std::function<std::unique_ptr<Expression>()> &func) const {
         if (structurallyEquals(*predicate)) {
-            return func(*this);
+            return func();
         }
 
         return std::nullopt;

@@ -8,9 +8,9 @@ namespace oa {
     std::unique_ptr<Expression> Add::evaluate() const {
         auto [leftResult, rightResult] = evaluateOperands();
 
-        if (leftResult->getType() == Expression::Type::REAL &&
-            rightResult->getType() == Expression::Type::REAL) {
-
+        if (this->structurallyEquals(Add {
+                    RealFactory {},
+                    RealFactory {} })) {
             auto &leftReal = dynamic_cast<Real &>(*leftResult);
             auto &rightReal = dynamic_cast<Real &>(*rightResult);
 

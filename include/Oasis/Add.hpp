@@ -12,7 +12,7 @@ namespace oa {
     /**
      * The Add class adds two expressions
      */
-    class Add final : public BinaryExpressionNode<Add> {
+    class Add final : public BinaryExpressionNode {
     public:
         Add();
         /**
@@ -30,6 +30,8 @@ namespace oa {
 
         OA_EXPRESSION_TYPE(ADD)
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_ARITHMETIC | EXPRESSION_CATEGORY_BINARY_OPERANDS)
+
+        OA_DECLARE_BINARYEXPRESSION_COPY_FUNCS
     };
 
     OA_DECLARE_FACTORY(AddFactory, Add)

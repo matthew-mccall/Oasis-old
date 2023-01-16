@@ -12,7 +12,7 @@ namespace oa {
     /**
      * The Multiply class multiplies two expressions
      */
-    class Multiply final : public BinaryExpressionNode<Multiply> {
+    class Multiply final : public BinaryExpressionNode {
     public:
         Multiply();
 
@@ -31,6 +31,8 @@ namespace oa {
 
         OA_EXPRESSION_TYPE(MULTIPLY)
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_ARITHMETIC | EXPRESSION_CATEGORY_BINARY_OPERANDS)
+
+        OA_DECLARE_BINARYEXPRESSION_COPY_FUNCS
     };
 
     OA_DECLARE_FACTORY(MultiplyFactory, Multiply)

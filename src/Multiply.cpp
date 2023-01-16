@@ -68,4 +68,6 @@ namespace oa {
 
     Multiply::Multiply() : BinaryExpressionNode() { }
 
+    OA_DEFINE_BINARYEXPRESSION_COPY_FUNCS(Multiply)
+
 }// namespace oa

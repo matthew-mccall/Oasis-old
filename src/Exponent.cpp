@@ -26,4 +26,6 @@ namespace oa {
 
     Exponent::Exponent() : BinaryExpressionNode() { }
 
+    OA_DEFINE_BINARYEXPRESSION_COPY_FUNCS(Exponent)
+
 }// namespace oa

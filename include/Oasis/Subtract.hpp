@@ -12,7 +12,7 @@ namespace oa {
     /**
      * The Add class subtracts two expressions
      */
-    class Subtract final : public BinaryExpressionNode<Subtract> {
+    class Subtract final : public BinaryExpressionNode {
     public:
         Subtract();
         Subtract(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right);
@@ -21,6 +21,8 @@ namespace oa {
 
         OA_EXPRESSION_TYPE(SUBTRACT)
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_ARITHMETIC | EXPRESSION_CATEGORY_BINARY_OPERANDS)
+
+        OA_DECLARE_BINARYEXPRESSION_COPY_FUNCS
     };
 
     OA_DECLARE_FACTORY(SubtractFactory, Subtract)

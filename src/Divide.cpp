@@ -32,5 +32,7 @@ namespace oa {
 
     Divide::Divide() : BinaryExpressionNode() { }
 
+    OA_DEFINE_BINARYEXPRESSION_COPY_FUNCS(Divide)
+
     DivideByZeroException::DivideByZeroException(const Expression &cause) : Exception(cause, "Cannot divide by zero!") { }
 }// namespace oa

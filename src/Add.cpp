@@ -8,7 +8,8 @@ namespace oa {
     std::unique_ptr<Expression> Add::evaluate() const {
         auto [leftResult, rightResult] = evaluateOperands();
 
-        if (leftResult->getType() == Expression::Type::REAL && rightResult->getType() == Expression::Type::REAL) {
+        if (leftResult->getType() == Expression::Type::REAL &&
+            rightResult->getType() == Expression::Type::REAL) {
 
             auto &leftReal = dynamic_cast<Real &>(*leftResult);
             auto &rightReal = dynamic_cast<Real &>(*rightResult);
@@ -74,4 +75,6 @@ namespace oa {
     Add::Add(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right) : BinaryExpressionNode(std::move(left), std::move(right)) { }
 
     Add::Add() : BinaryExpressionNode() { }
+
+    OA_DEFINE_BINARYEXPRESSION_COPY_FUNCS(Add)
 }// namespace oa

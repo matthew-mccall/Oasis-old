@@ -14,7 +14,7 @@ namespace oa {
     /**
      * The exponent class exponentiates a base to a power
      */
-    class Exponent final : public BinaryExpressionNode<Exponent> {
+    class Exponent final : public BinaryExpressionNode {
     public:
         Exponent();
 
@@ -38,6 +38,8 @@ namespace oa {
 
         OA_EXPRESSION_TYPE(EXPONENT)
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_ARITHMETIC | EXPRESSION_CATEGORY_BINARY_OPERANDS)
+
+        OA_DECLARE_BINARYEXPRESSION_COPY_FUNCS
     };
 
     OA_DECLARE_FACTORY(ExponentFactory, Exponent)

@@ -74,4 +74,6 @@ namespace oa {
 
     Subtract::Subtract() : BinaryExpressionNode() { }
 
+    OA_DEFINE_BINARYEXPRESSION_COPY_FUNCS(Subtract)
+
 }// namespace oa

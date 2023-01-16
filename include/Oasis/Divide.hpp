@@ -13,7 +13,7 @@ namespace oa {
     /**
      * The Divide class adds divides expressions
      */
-    class Divide final : public BinaryExpressionNode<Divide> {
+    class Divide final : public BinaryExpressionNode {
     public:
         Divide();
 
@@ -32,6 +32,8 @@ namespace oa {
 
         OA_EXPRESSION_TYPE(DIVIDE)
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_ARITHMETIC | EXPRESSION_CATEGORY_BINARY_OPERANDS)
+
+        OA_DECLARE_BINARYEXPRESSION_COPY_FUNCS
     };
 
     OA_DECLARE_FACTORY(DivideFactory, Divide)

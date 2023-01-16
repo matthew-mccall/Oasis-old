@@ -8,6 +8,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(CTest)
 include(AddOasisTest)
@@ -15,7 +16,7 @@ include(AddOasisTest)
 add_subdirectory(lib/GSL)
 add_subdirectory(lib/spdlog)
 
-add_library(Oasis include/Oasis/Expression.hpp src/Real.cpp include/Oasis/Real.hpp include/Oasis/Utility/BinaryExpressionNode.hpp include/Oasis/Utility/Types.hpp src/Blank.cpp include/Oasis/Blank.hpp src/Add.cpp include/Oasis/Add.hpp include/Oasis/Subtract.hpp src/Subtract.cpp src/Multiply.cpp include/Oasis/Multiply.hpp src/Divide.cpp include/Oasis/Divide.hpp src/Exponent.cpp include/Oasis/Exponent.hpp src/Variable.cpp include/Oasis/Variable.hpp src/Substitute.cpp include/Oasis/Substitute.hpp include/Oasis/Oasis.hpp include/Oasis/Utility/LeafExpressionNode.hpp)
+add_library(Oasis include/Oasis/Expression.hpp src/Real.cpp include/Oasis/Real.hpp include/Oasis/Utility/BinaryExpressionNode.hpp include/Oasis/Utility/Types.hpp src/Blank.cpp include/Oasis/Blank.hpp src/Add.cpp include/Oasis/Add.hpp include/Oasis/Subtract.hpp src/Subtract.cpp src/Multiply.cpp include/Oasis/Multiply.hpp src/Divide.cpp include/Oasis/Divide.hpp src/Exponent.cpp include/Oasis/Exponent.hpp src/Variable.cpp include/Oasis/Variable.hpp src/Substitute.cpp include/Oasis/Substitute.hpp include/Oasis/Oasis.hpp include/Oasis/Utility/LeafExpressionNode.hpp src/BinaryExpressionNode.cpp)
 add_library(Oasis::Oasis ALIAS Oasis)
 
 target_include_directories(Oasis PUBLIC include)

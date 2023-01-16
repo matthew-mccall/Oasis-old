@@ -51,27 +51,25 @@ namespace oa {
 
 
     bool BinaryExpressionNode::equals(const Expression &other) const {
-
         auto result = evaluate();
-        auto otherResult = evaluate();
+        auto otherResult = other.evaluate();
 
-        if (
-                (result->getCategories() & EXPRESSION_CATEGORY_BINARY_OPERANDS) &&
-                (otherResult->getCategories() & EXPRESSION_CATEGORY_BINARY_OPERANDS)) {
-            if (other.getType() != this->getType()) {
-                return false;
-            }
-
-            const auto &binaryResult = dynamic_cast<const BinaryExpressionNode &>(*result);
-            const auto &binaryOther = dynamic_cast<const BinaryExpressionNode &>(*otherResult);
-
-            auto [leftResult, rightResult] = binaryResult.evaluateOperands();
-            auto [otherLeftResult, otherRightResult] = binaryOther.evaluateOperands();
-
-            return (*leftResult == *otherLeftResult) && (*rightResult == *otherRightResult);
+        if (!(result->getCategories() & EXPRESSION_CATEGORY_BINARY_OPERANDS) ||
+            !(otherResult->getCategories() & EXPRESSION_CATEGORY_BINARY_OPERANDS)) {
+            return *result == *otherResult;
         }
 
-        return *result == *otherResult;
+        if (other.getType() != this->getType()) {
+            return false;
+        }
+
+        const auto &binaryResult = dynamic_cast<const BinaryExpressionNode &>(*result);
+        const auto &binaryOther = dynamic_cast<const BinaryExpressionNode &>(*otherResult);
+
+        auto [leftResult, rightResult] = binaryResult.evaluateOperands();
+        auto [otherLeftResult, otherRightResult] = binaryOther.evaluateOperands();
+
+        return (*leftResult == *otherLeftResult) && (*rightResult == *otherRightResult);
     }
 
     const std::unique_ptr<Expression> &BinaryExpressionNode::getLeft() const {
@@ -83,4 +81,36 @@ namespace oa {
         return _right;
     }
 
-}
+    bool BinaryExpressionNode::structurallyEquals(const Expression &other) const {
+        auto result = evaluate();
+        auto otherResult = other.evaluate();
+
+        if (!(result->getCategories() & EXPRESSION_CATEGORY_BINARY_OPERANDS) ||
+            !(otherResult->getCategories() & EXPRESSION_CATEGORY_BINARY_OPERANDS)) {
+            return result->structurallyEquals(*otherResult);
+        }
+
+        if (other.getType() != this->getType()) {
+            return false;
+        }
+
+        const auto &binaryResult = dynamic_cast<const BinaryExpressionNode &>(*result);
+        const auto &binaryOther = dynamic_cast<const BinaryExpressionNode &>(*otherResult);
+
+        auto [leftResult, rightResult] = binaryResult.evaluateOperands();
+        //        auto [otherLeftResult, otherRightResult] = binaryOther.evaluateOperands();
+
+        // We will treat blanks as wildcards, so we don't need to check the other side.
+        return ((binaryOther._left->getType() == Expression::Type::BLANK) || (leftResult->structurallyEquals(*binaryOther._left->evaluate()))) &&
+               ((binaryOther._right->getType() == Expression::Type::BLANK) || (rightResult->structurallyEquals(*binaryOther._right->evaluate())));
+    }
+
+    std::optional<std::unique_ptr<Expression>> BinaryExpressionNode::evaluateIfSatisfiesPredicate(const std::unique_ptr<Expression> &predicate, const std::function<std::unique_ptr<Expression>(const Expression &)> &func) const {
+        if (structurallyEquals(*predicate)) {
+            return func(*this);
+        }
+
+        return std::nullopt;
+    }
+
+}// namespace oa

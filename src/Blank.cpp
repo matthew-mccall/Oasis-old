@@ -14,5 +14,7 @@ namespace oa {
         return other.getType() == Expression::Type::BLANK;
     }
 
+    OA_DEFINE_LEAFEXPRESSION_COPY_FUNCS(Blank)
+
     BlankException::BlankException(const Expression &cause) : Exception(cause, "Cannot evaluate Blank expression!") { }
 }// namespace oa

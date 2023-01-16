@@ -7,6 +7,7 @@
 
 #include <cassert>
 #include <functional>
+#include <optional>
 
 #include "Oasis/Expression.hpp"
 
@@ -40,21 +41,30 @@ namespace oa {
     protected:
         [[nodiscard]] BinaryEvaluateReturnType evaluateOperands() const;
 
+        /**
+         * Compares the left and right operands of this expression to the left and right operands of another expression.
+         * If the left or right operands of the other expression is blank, then those operands are compared true.
+         * @param other
+         * @return true, if the left and right operands of this expression are equal to the left and right operands of the other expression
+         */
+        [[nodiscard]] bool structurallyEquals(const Expression &other) const final;
+
+        /*
+         * This compares itself to the predicate, and if they have similar structure, it runs func.
+         */
+        std::optional<std::unique_ptr<Expression>> evaluateIfSatisfiesPredicate(const std::unique_ptr<Expression> &predicate, const std::function<std::unique_ptr<Expression>(const Expression &)> &func) const;
+
         std::unique_ptr<Expression> _left, _right;
     };
 
 }// namespace oa
 
-#define OA_DECLARE_BINARYEXPRESSION_COPY_FUNCS \
-    [[nodiscard]] std::unique_ptr<oa::Expression> copy() const final; \
-    [[nodiscard]] std::unique_ptr<oa::Expression> copyWithoutChildren() const final;
-
-#define OA_DEFINE_BINARYEXPRESSION_COPY_FUNCS(CLASS_NAME) \
-    std::unique_ptr<oa::Expression> CLASS_NAME::copy() const { \
-        return std::make_unique<CLASS_NAME>(_left->copy(), _right->copy()); \
-    } \
+#define OA_DEFINE_BINARYEXPRESSION_COPY_FUNCS(CLASS_NAME)                     \
+    std::unique_ptr<oa::Expression> CLASS_NAME::copy() const {                \
+        return std::make_unique<CLASS_NAME>(_left->copy(), _right->copy());   \
+    }                                                                         \
     std::unique_ptr<oa::Expression> CLASS_NAME::copyWithoutChildren() const { \
-        return std::make_unique<CLASS_NAME>(); \
+        return std::make_unique<CLASS_NAME>();                                \
     }
 
 #endif//OASIS_BINARYEXPRESSIONNODE_HPP

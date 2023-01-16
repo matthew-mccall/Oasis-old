@@ -12,15 +12,12 @@ namespace oa {
     /**
      * Represents a Real number
      */
-    class Real final : public LeafExpressionNode<Real> {
+    class Real final : public LeafExpressionNode {
     public:
         Real() = default;
         Real(const Real &other);
 
         explicit Real(double val);
-
-        [[nodiscard]] std::unique_ptr<oa::Expression> copy() const override;
-        std::unique_ptr<oa::Expression> copyWithoutChildren() const override;
 
         [[nodiscard]] std::unique_ptr<Expression> evaluate() const override;
 
@@ -31,6 +28,7 @@ namespace oa {
         OA_EXPRESSION_TYPE(REAL)
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_VALUE)
 
+        OA_OVERRIDE_COPY_FUNCS
     private:
         double _val {};
     };

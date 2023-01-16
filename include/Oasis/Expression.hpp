@@ -68,6 +68,7 @@ namespace oa {
         virtual void recurseForEachChild(std::function<void(const Expression &)> func) const = 0;
 
         [[nodiscard]] virtual bool equals(const Expression &other) const = 0;
+        [[nodiscard]] virtual bool structurallyEquals(const Expression &other) const = 0;
 
         bool operator==(const Expression &other) const { return other.equals(*this); };
 
@@ -137,5 +138,9 @@ namespace oa {
     private:                                                                                             \
         std::unique_ptr<type> _ptr;                                                                      \
     };
+
+#define OA_OVERRIDE_COPY_FUNCS                                        \
+    [[nodiscard]] std::unique_ptr<oa::Expression> copy() const final; \
+    [[nodiscard]] std::unique_ptr<oa::Expression> copyWithoutChildren() const final;
 
 #endif//OASIS_EXPRESSION_HPP

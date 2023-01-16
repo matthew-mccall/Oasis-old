@@ -13,7 +13,7 @@ namespace oa {
     /**
      * An arbitrary variable
      */
-    class Variable final : public LeafExpressionNode<Variable> {
+    class Variable final : public LeafExpressionNode {
     public:
         explicit Variable(std::string rep);
         Variable(const Variable &other);
@@ -27,6 +27,7 @@ namespace oa {
         OA_EXPRESSION_TYPE(VARIABLE)
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_VALUE)
 
+        OA_OVERRIDE_COPY_FUNCS
     private:
         std::string _rep;//representation eg x
     };

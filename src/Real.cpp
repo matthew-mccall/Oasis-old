@@ -17,13 +17,6 @@ namespace oa {
     double Real::getVal() const {
         return _val;
     }
-    std::unique_ptr<oa::Expression> Real::copy() const {
-        return RealFactory { getVal() };
-    }
-
-    std::unique_ptr<oa::Expression> Real::copyWithoutChildren() const {
-        return RealFactory { getVal() };
-    }
 
     bool Real::equals(const Expression &other) const {
 
@@ -36,5 +29,7 @@ namespace oa {
         const auto &realOther = dynamic_cast<const Real &>(*result);
         return realOther.getVal() == getVal();
     }
+
+    OA_DEFINE_LEAFEXPRESSION_COPY_FUNCS(Real)
 
 }// namespace oa

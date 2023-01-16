@@ -96,12 +96,4 @@ namespace oa {
                ((binaryOther._right->getType() == Expression::Type::BLANK) || (rightResult->structurallyEquals(*binaryOther._right->evaluate())));
     }
 
-    std::optional<std::unique_ptr<Expression>> BinaryExpressionNode::evaluateIfSatisfiesPredicate(const std::unique_ptr<Expression> &predicate, const std::function<std::unique_ptr<Expression>()> &func) const {
-        if (structurallyEquals(*predicate)) {
-            return func();
-        }
-
-        return std::nullopt;
-    }
-
 }// namespace oa

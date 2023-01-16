@@ -49,11 +49,6 @@ namespace oa {
          */
         [[nodiscard]] bool structurallyEquals(const Expression &other) const final;
 
-        /*
-         * This compares itself to the predicate, and if they have similar structure, it runs func.
-         */
-        std::optional<std::unique_ptr<Expression>> evaluateIfSatisfiesPredicate(const std::unique_ptr<Expression> &predicate, const std::function<std::unique_ptr<Expression>()> &func) const;
-
         std::unique_ptr<Expression> _left, _right;
     };
 

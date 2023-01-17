@@ -5,9 +5,10 @@
 #include "spdlog/spdlog.h"
 
 #include "wx/sizer.h"
+#include "wx/webview.h"
 
-#include "../components/KeypadButton.hpp"
 #include "SimpleView.hpp"
+#include "components/KeypadButton/KeypadButton.hpp"
 
 SimpleView::SimpleView() : wxFrame(nullptr, wxID_ANY, "Simple View") {
     OnInit();
@@ -25,6 +26,11 @@ void SimpleView::OnInit() {
     menuBar->Append(menuHelp, "&Help");
 
     SetMenuBar(menuBar);
+
+    auto *vStack = new wxBoxSizer(wxVERTICAL);
+
+    auto *webView = wxWebView::New(this, wxID_ANY);
+    webView->SetPage("<html><body><h1>Hello, world!</h1></body></html>", "");
 
     auto *keypad = new wxGridSizer(5, 4, 4, 4);
 
@@ -49,7 +55,10 @@ void SimpleView::OnInit() {
     keypad->Add(new KeypadButton(this, wxID_ANY, "."), wxSizerFlags().Expand().Border(wxALL, 0));
     keypad->Add(new KeypadButton(this, wxID_ANY, "Enter"), wxSizerFlags().Expand().Border(wxALL, 0));
 
-    SetSizerAndFit(keypad);
+    vStack->Add(webView, wxSizerFlags(1).Expand().Border(wxALL, 0));
+    vStack->Add(keypad, wxSizerFlags(1).Expand().Border(wxALL, 0));
+
+    SetSizerAndFit(vStack);
 
     CreateStatusBar();
     SetStatusText("Copyright © 2022 Matthew McCall and Andrew Nazareth");

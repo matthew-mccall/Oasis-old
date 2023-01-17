@@ -10,59 +10,67 @@ namespace oa {
     std::unique_ptr<Expression> Subtract::evaluate() const {
         auto [leftResult, rightResult] = evaluateOperands();
 
-        if (leftResult->getType() == Expression::Type::REAL && rightResult->getType() == Expression::Type::REAL) {
+        if (*leftResult == *rightResult) {
+            return RealFactory { 0 };
+        }
 
+        if (this->structurallyEquals(Subtract {
+                    RealFactory {},
+                    RealFactory {} })) {
             auto &leftReal = dynamic_cast<Real &>(*leftResult);
             auto &rightReal = dynamic_cast<Real &>(*rightResult);
 
             return RealFactory { leftReal.getVal() - rightReal.getVal() };
         }
 
-        if (*leftResult == *rightResult) {
-            return RealFactory { 0 };
-        }
+        if (this->structurallyEquals(Subtract {
+                    BlankFactory {},
+                    MultiplyFactory {
+                            RealFactory {},
+                            BlankFactory {} } })) {
+            auto &rightMultiply = dynamic_cast<Multiply &>(*rightResult);
+            auto &rightMultiplyCoefficient = dynamic_cast<Real &>(*rightMultiply.getLeft());
 
-        if (rightResult->getType() == Expression::Type::MULTIPLY) {
-            auto &right = dynamic_cast<Multiply &>(*rightResult);
-
-            if ((right.getLeft()->getType() == Expression::Type::REAL) && (*leftResult == *right.getRight())) {
-                auto &rightCoefficient = dynamic_cast<Real &>(*right.getLeft());
-
+            if (*rightMultiply.getRight() == *leftResult) {
                 return MultiplyFactory {
-                    RealFactory { rightCoefficient.getVal() - 1 },
+                    RealFactory { rightMultiplyCoefficient.getVal() - 1 },
                     leftResult->copy()
                 };
             }
         }
 
-        if (leftResult->getType() == Expression::Type::MULTIPLY) {
-            auto &left = dynamic_cast<Multiply &>(*leftResult);
+        if (this->structurallyEquals(Subtract {
+                    MultiplyFactory {
+                            RealFactory {},
+                            BlankFactory {} },
+                    BlankFactory {} })) {
+            auto &leftMultiply = dynamic_cast<Multiply &>(*leftResult);
+            auto &leftMultiplyCoefficient = dynamic_cast<Real &>(*leftMultiply.getLeft());
 
-            if ((left.getLeft()->getType() == Expression::Type::REAL) && (*rightResult == *left.getRight())) {
-                auto &leftCoefficient = dynamic_cast<Real &>(*left.getLeft());
-
+            if (*leftMultiply.getRight() == *rightResult) {
                 return MultiplyFactory {
-                    RealFactory { leftCoefficient.getVal() - 1 },
+                    RealFactory { leftMultiplyCoefficient.getVal() - 1 },
                     rightResult->copy()
                 };
             }
         }
 
-        if (leftResult->getType() == Expression::Type::MULTIPLY && rightResult->getType() == Expression::Type::MULTIPLY) {
-            auto &left = dynamic_cast<Multiply &>(*leftResult);
-            auto &right = dynamic_cast<Multiply &>(*rightResult);
+        if (this->structurallyEquals(Subtract {
+                    MultiplyFactory {
+                            RealFactory {},
+                            BlankFactory {} },
+                    MultiplyFactory {
+                            RealFactory {},
+                            BlankFactory {} } })) {
+            auto &leftMultiply = dynamic_cast<Multiply &>(*leftResult);
+            auto &leftMultiplyCoefficient = dynamic_cast<Real &>(*leftMultiply.getLeft());
+            auto &rightMultiply = dynamic_cast<Multiply &>(*rightResult);
+            auto &rightMultiplyCoefficient = dynamic_cast<Real &>(*rightMultiply.getLeft());
 
-            if (
-                    (left.getLeft()->getType() == Expression::Type::REAL) &&
-                    (right.getLeft()->getType() == Expression::Type::REAL) &&
-                    (*left.getRight() == *right.getRight())) {
-
-                auto &leftCoefficient = dynamic_cast<Real &>(*left.getLeft());
-                auto &rightCoefficient = dynamic_cast<Real &>(*right.getLeft());
-
+            if (*leftMultiply.getRight() == *rightMultiply.getRight()) {
                 return MultiplyFactory {
-                    RealFactory { (leftCoefficient.getVal() - rightCoefficient.getVal()) },
-                    left.getRight()->copy()
+                    RealFactory { leftMultiplyCoefficient.getVal() - rightMultiplyCoefficient.getVal() },
+                    leftMultiply.getRight()->copy()
                 };
             }
         }

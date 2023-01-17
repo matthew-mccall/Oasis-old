@@ -12,10 +12,6 @@ public:
 
 private:
     void OnInit();
-    void OnExit(wxCommandEvent &event);
-    void OnAbout(wxCommandEvent &event);
-
-    wxMenuBar *menuBar = nullptr;
 };
 
 

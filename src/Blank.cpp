@@ -16,5 +16,9 @@ namespace oa {
 
     OA_DEFINE_LEAFEXPRESSION_COPY_FUNCS(Blank)
 
+    bool Blank::structurallyEquals(const Expression &other) const {
+        return true;
+    }
+
     BlankException::BlankException(const Expression &cause) : Exception(cause, "Cannot evaluate Blank expression!") { }
 }// namespace oa

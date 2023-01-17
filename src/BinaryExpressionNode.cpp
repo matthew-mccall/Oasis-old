@@ -26,6 +26,12 @@ namespace oa {
         auto leftResult = _left->evaluate();
         auto rightResult = _right->evaluate();
 
+        if (this->getType() == Expression::Type::MULTIPLY) {
+            if (rightResult->getType() == Expression::Type::REAL && leftResult->getType() != Expression::Type::REAL) {
+                std::swap(leftResult, rightResult);
+            }
+        }
+
         return { std::move(leftResult), std::move(rightResult) };
     }
 
@@ -82,6 +88,11 @@ namespace oa {
     }
 
     bool BinaryExpressionNode::structurallyEquals(const Expression &other) const {
+
+        if (other.getType() == Expression::Type::BLANK) {
+            return true;
+        }
+
         if (other.getType() != this->getType()) {
             return false;
         }
@@ -89,11 +100,10 @@ namespace oa {
         const auto &binaryOther = dynamic_cast<const BinaryExpressionNode &>(other);
 
         auto [leftResult, rightResult] = evaluateOperands();
-        //        auto [otherLeftResult, otherRightResult] = binaryOther.evaluateOperands();
 
         // We will treat blanks as wildcards, so we don't need to check the other side.
-        return ((binaryOther._left->getType() == Expression::Type::BLANK) || (leftResult->structurallyEquals(*binaryOther._left->evaluate()))) &&
-               ((binaryOther._right->getType() == Expression::Type::BLANK) || (rightResult->structurallyEquals(*binaryOther._right->evaluate())));
+        return leftResult->structurallyEquals(*binaryOther._left) &&
+               rightResult->structurallyEquals(*binaryOther._right);
     }
 
 }// namespace oa

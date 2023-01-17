@@ -6,6 +6,15 @@
 
 namespace oa {
 
+    bool LeafExpressionNode::structurallyEquals(const Expression &other) const {
+
+        if (other.getType() == Expression::Type::BLANK) {
+            return true;
+        }
+
+        return getType() == other.getType();
+    }
+
     bool LeafExpressionNode::addChild(std::unique_ptr<Expression> &&expr) {
         return false;
     }

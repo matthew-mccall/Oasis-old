@@ -15,9 +15,7 @@ namespace oa {
         void forEachChild(std::function<void(const std::unique_ptr<Expression> &)> func) const final;
         void recurseForEachChild(std::function<void(const Expression &)> func) const final;
 
-        [[nodiscard]] bool structurallyEquals(const Expression &other) const override {
-            return getType() == other.getType();
-        }
+        [[nodiscard]] bool structurallyEquals(const Expression &other) const override;
     };
 
 }// namespace oa

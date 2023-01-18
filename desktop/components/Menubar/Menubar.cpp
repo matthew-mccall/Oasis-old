@@ -44,6 +44,8 @@ void Menubar::OnInit() {
     menubar->Append(menuHelp, "&Help");
 
     menubar->Bind(wxEVT_MENU, &Menubar::OnAbout, this, wxID_ABOUT);
+    menubar->Bind(wxEVT_MENU, &Menubar::OnAlgebra, this, MenuID::ALGEBRA);
+    menubar->Bind(wxEVT_MENU, &Menubar::OnArithmetic, this, MenuID::ARITHMETIC);
     menubar->Bind(wxEVT_MENU, &Menubar::OnBases, this, MenuID::BASES);
     menubar->Bind(wxEVT_MENU, &Menubar::OnTruthTable, this, MenuID::TRUTH_TABLE);
 }
@@ -67,10 +69,6 @@ void Menubar::OnTruthTable(wxCommandEvent &event) {
     truthTable->Show(true);
 }
 
-void Menubar::OnExit(const std::function<void(wxCommandEvent &)> &exitFunction, wxFrame *frame) {
-    frame->Bind(wxEVT_MENU, exitFunction, wxID_EXIT);
-}
-
 void Menubar::OnAlgebra(wxCommandEvent &event) {
     wxMessageBox("Algebra is not yet implemented", "Algebra", wxOK | wxICON_INFORMATION);
 }
@@ -78,4 +76,8 @@ void Menubar::OnAlgebra(wxCommandEvent &event) {
 void Menubar::OnArithmetic(wxCommandEvent &event) {
     auto *arithmetic = new SimpleView();
     arithmetic->Show(true);
+}
+
+void Menubar::OnExit(const std::function<void(wxCommandEvent &)> &exitFunction, wxFrame *frame) {
+    frame->Bind(wxEVT_MENU, exitFunction, wxID_EXIT);
 }

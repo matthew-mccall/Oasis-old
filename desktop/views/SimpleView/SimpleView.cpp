@@ -50,4 +50,11 @@ void SimpleView::OnInit() {
 
     CreateStatusBar();
     SetStatusText("Copyright © 2022 Matthew McCall and Andrew Nazareth");
+
+    menubar.OnExit([this](wxCommandEvent &event) {
+        Close(true);
+    },
+                   this);
+
+    SetMenuBar(menubar.getMenubar());
 }

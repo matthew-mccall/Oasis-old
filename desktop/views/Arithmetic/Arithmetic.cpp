@@ -7,14 +7,14 @@
 #include "wx/sizer.h"
 #include "wx/webview.h"
 
-#include "SimpleView.hpp"
+#include "Arithmetic.hpp"
 #include "components/KeypadButton/KeypadButton.hpp"
 
-SimpleView::SimpleView() : wxFrame(nullptr, wxID_ANY, "Simple View") {
+Arithmetic::Arithmetic() : wxFrame(nullptr, wxID_ANY, "Arithmetic") {
     OnInit();
 }
 
-void SimpleView::OnInit() {
+void Arithmetic::OnInit() {
     auto *vStack = new wxBoxSizer(wxVERTICAL);
 
     auto *webView = wxWebView::New(this, wxID_ANY);

@@ -3,8 +3,8 @@
 //
 
 #include "Menubar.hpp"
+#include "views/Arithmetic/Arithmetic.hpp"
 #include "views/BaseConverter/BaseConverter.hpp"
-#include "views/SimpleView/SimpleView.hpp"
 #include "views/TruthTable/TruthTable.hpp"
 
 
@@ -74,7 +74,7 @@ void Menubar::OnAlgebra(wxCommandEvent &event) {
 }
 
 void Menubar::OnArithmetic(wxCommandEvent &event) {
-    auto *arithmetic = new SimpleView();
+    auto *arithmetic = new Arithmetic();
     arithmetic->Show(true);
 }
 

@@ -2,14 +2,14 @@
 // Created by Matthew McCall on 11/9/22.
 //
 
-#ifndef OASIS_SIMPLEVIEW_HPP
-#define OASIS_SIMPLEVIEW_HPP
+#ifndef OASIS_ARITHMETIC_HPP
+#define OASIS_ARITHMETIC_HPP
 
 #include "components/Menubar/Menubar.hpp"
 
-class SimpleView : public wxFrame {
+class Arithmetic : public wxFrame {
 public:
-    SimpleView();
+    Arithmetic();
 
 private:
     void OnInit();
@@ -18,4 +18,4 @@ private:
 };
 
 
-#endif//OASIS_SIMPLEVIEW_HPP
+#endif//OASIS_ARITHMETIC_HPP

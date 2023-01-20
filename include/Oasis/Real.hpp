@@ -23,7 +23,7 @@ namespace oa {
 
         [[nodiscard]] double getVal() const;
 
-        bool equals(const Expression &other) const override;
+        [[nodiscard]] bool equals(const Expression &other) const override;
 
         OA_EXPRESSION_TYPE(REAL)
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_VALUE)

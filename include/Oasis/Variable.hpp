@@ -22,7 +22,7 @@ namespace oa {
 
         [[nodiscard]] std::string getRep() const;
 
-        bool equals(const Expression &other) const override;
+        [[nodiscard]] bool equals(const Expression &other) const override;
 
         OA_EXPRESSION_TYPE(VARIABLE)
         OA_EXPRESSION_CATEGORIES(EXPRESSION_CATEGORY_VALUE)

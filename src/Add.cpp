@@ -9,6 +9,7 @@
 namespace oa {
     std::unique_ptr<Expression> Add::evaluate() const {
         auto [leftResult, rightResult] = evaluateOperands();
+        std::unique_ptr<Add> newAdd = AddFactory { leftResult->copy(), rightResult->copy() };
 
         if (*leftResult == *rightResult) {
             return MultiplyFactory {
@@ -17,7 +18,7 @@ namespace oa {
             };
         }
 
-        if (this->structurallyEquals(Add {
+        if (newAdd->structurallyEquals(Add {
                     RealFactory {},
                     RealFactory {} })) {
             auto &leftReal = dynamic_cast<Real &>(*leftResult);
@@ -26,7 +27,7 @@ namespace oa {
             return RealFactory { leftReal.getVal() + rightReal.getVal() };
         }
 
-        if (this->structurallyEquals(Add {
+        if (newAdd->structurallyEquals(Add {
                     BlankFactory {},
                     MultiplyFactory {
                             RealFactory {},
@@ -42,7 +43,7 @@ namespace oa {
             }
         }
 
-        if (this->structurallyEquals(Add {
+        if (newAdd->structurallyEquals(Add {
                     MultiplyFactory {
                             RealFactory {},
                             BlankFactory {} },
@@ -58,7 +59,7 @@ namespace oa {
             }
         }
 
-        if (this->structurallyEquals(Add {
+        if (newAdd->structurallyEquals(Add {
                     MultiplyFactory {
                             RealFactory {},
                             BlankFactory {} },

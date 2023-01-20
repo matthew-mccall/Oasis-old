@@ -25,8 +25,11 @@ namespace oa {
         Divide(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right);
 
         /**
-         * Simplifies the operands and divides them if they are Real operands
-         * @return The result, error, and/or cause of error if there is an error
+         * Simplifies the operands and divides them if they are Real operands.
+         *
+         * @throws DivideByZeroException if the right operand is 0
+         * @throws BlankException if either operand is blank
+         * @return The simplified expression.
          */
         [[nodiscard]] std::unique_ptr<Expression> evaluate() const override;
 

@@ -17,6 +17,12 @@ namespace oa {
         Subtract();
         Subtract(std::unique_ptr<Expression> &&left, std::unique_ptr<Expression> &&right);
 
+        /**
+         * Evaluates the operands and subtracts them if they are Real operands
+         *
+         * @throws BlankException if either operand is blank
+         * @return The simplified expression.
+         */
         [[nodiscard]] std::unique_ptr<Expression> evaluate() const override;
 
         OA_EXPRESSION_TYPE(SUBTRACT)

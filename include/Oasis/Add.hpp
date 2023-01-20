@@ -24,7 +24,9 @@ namespace oa {
 
         /**
          * Evaluates the operands and adds them if they are Real operands
-         * @return The result, error, and/or cause of error if there is an error
+         *
+         * @throws BlankException if either operand is blank
+         * @return The simplified expression.
          */
         [[nodiscard]] std::unique_ptr<Expression> evaluate() const override;
 

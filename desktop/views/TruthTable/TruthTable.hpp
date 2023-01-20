@@ -5,8 +5,19 @@
 #ifndef OASIS_TRUTHTABLE_HPP
 #define OASIS_TRUTHTABLE_HPP
 
+#include "wx/grid.h"
+
+#include "components/Menubar/Menubar.hpp"
 
 class TruthTable : public wxFrame {
+public:
+    TruthTable();
+
+private:
+    void OnInit();
+
+    Menubar menubar;
+    wxGrid *table {};
 };
 
 

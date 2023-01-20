@@ -5,6 +5,7 @@
 #ifndef OASIS_BASECONVERTER_HPP
 #define OASIS_BASECONVERTER_HPP
 
+#include <wx/spinctrl.h>
 
 #include "components/Menubar/Menubar.hpp"
 class BaseConverter : public wxFrame {
@@ -13,8 +14,14 @@ public:
 
 private:
     void OnInit();
+    void OnUpdate(wxCommandEvent &event);
 
     Menubar menubar;
+
+    wxTextCtrl *inputText {};
+    wxSpinCtrl *inputBase {};
+    wxTextCtrl *outputText {};
+    wxSpinCtrl *outputBase {};
 };
 
 

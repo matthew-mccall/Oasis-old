@@ -1,3 +1,5 @@
+**This is the old version of the project! The new one is at [matthew-mccall/Oasis](https://github.com/matthew-mccall/Oasis).**
+
 # Oasis
 
 Open Algebra Software for Inferring Solutions
